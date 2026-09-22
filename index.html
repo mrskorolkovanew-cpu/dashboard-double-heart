@@ -367,3 +367,11 @@
   if(document.readyState==='loading')window.addEventListener('DOMContentLoaded',start);else start();
 })();
 </script>
+
+<script>
+(()=>{
+  const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  function restore(){const row=document.querySelector('#daily-view .raw-monitor tbody tr:first-child');if(!row||row.cells.length!==18)return;const title=row.cells[0].textContent;row.innerHTML='<td colspan="12" style="text-align:center;font-weight:700">'+esc(title)+'</td>'+Array.from({length:6},()=>'<td></td>').join('');}
+  let n=0;const loop=()=>{restore();if(++n<50)setTimeout(loop,250)};loop();
+})();
+</script>
