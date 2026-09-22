@@ -375,3 +375,23 @@
   let n=0;const loop=()=>{restore();if(++n<50)setTimeout(loop,250)};loop();
 })();
 </script>
+
+
+<script>
+(()=>{
+  const dailyView=document.getElementById('daily-view');
+  if(!dailyView)return;
+  const sourceFile='https://mrskorolkovanew-cpu.github.io/p-skazka-dashboard/daily-monitoring.xlsx';
+  const viewer='https://view.officeapps.live.com/op/embed.aspx?src='+encodeURIComponent(sourceFile);
+  const style=document.createElement('style');
+  style.textContent='.native-monitor-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 12px;color:var(--navy);font-size:15px;font-weight:800}.native-monitor-toolbar a{color:var(--blue);font-size:13px;text-decoration:none;white-space:nowrap}.native-monitor-toolbar a:hover{text-decoration:underline}.native-monitor-frame{height:calc(100vh - 190px);min-height:820px;overflow:hidden;border:1px solid rgba(222,232,255,.18);border-radius:10px;background:#fff}.native-monitor-frame iframe{display:block;width:100%;height:100%;border:0;background:#fff}@media(max-width:720px){.native-monitor-toolbar{align-items:flex-start;flex-direction:column}.native-monitor-frame{height:760px;min-height:0}}';
+  document.head.appendChild(style);
+  const observer=new MutationObserver(()=>{if(!dailyView.querySelector('iframe[data-native-daily]'))render();});
+  function render(){
+    observer.disconnect();
+    dailyView.innerHTML='<div class="native-monitor-toolbar"><span>Ежедневный мониторинг — исходный файл</span><a href="daily-monitoring.xlsx" target="_blank" rel="noopener">Открыть исходный Excel</a></div><div class="native-monitor-frame"><iframe data-native-daily title="Ежедневный мониторинг — исходная таблица Excel" src="'+viewer+'"></iframe></div>';
+    observer.observe(dailyView,{childList:true,subtree:true});
+  }
+  render();
+})();
+</script>
