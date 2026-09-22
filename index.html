@@ -460,3 +460,14 @@
   new MutationObserver(apply).observe(card,{childList:true,subtree:true,characterData:true});
 })();
 </script>
+
+<script>
+(()=>{
+  if(document.getElementById('actual-table'))return;
+  const hiddenTable=document.createElement('div');
+  hiddenTable.id='actual-table';
+  hiddenTable.hidden=true;
+  hiddenTable.setAttribute('aria-hidden','true');
+  document.body.appendChild(hiddenTable);
+})();
+</script>
