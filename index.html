@@ -471,3 +471,20 @@
   document.body.appendChild(hiddenTable);
 })();
 </script>
+
+<script>
+(()=>{
+  const currentNote=document.querySelector('.kpi-grid .kpi:nth-child(2) .kpi-note');
+  if(currentNote)currentNote.textContent='по КСГ от 14.09.26';
+  const milestonesNote=document.querySelector('#summary-view .section[aria-labelledby="milestones-title"] .section-intro p');
+  if(milestonesNote)milestonesNote.remove();
+})();
+</script>
+
+<script>
+(()=>{
+  const headers=document.querySelector('#milestones')?.closest('table')?.querySelectorAll('thead th');
+  if(headers?.[1])headers[1].textContent='по КСГ от 29.07.26';
+  if(headers?.[2])headers[2].textContent='по КСГ от 14.09.26';
+})();
+</script>
