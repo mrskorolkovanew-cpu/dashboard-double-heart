@@ -518,3 +518,58 @@
   let attempts=0;const refresh=setInterval(()=>{apply();if(++attempts===30)clearInterval(refresh);},250);
 })();
 </script>
+
+<script>
+(()=>{
+  const completed={
+    mechanical:[
+      ['1.1','Регулировка фланцев трэков для обеспечения соосности со стрелкой техобслуживания'],
+      ['1.2','Регулировка стрелки техобслуживания для обеспечения соосности с треками']
+    ],
+    electrical:[
+      ['2.1','Установка шкафов в техпомещении'],
+      ['2.3','Прокладка кабеля датчиков температуры'],
+      ['2.5','Поставка и монтаж кронштейнов для корпусов DAP2A и DAP2B.'],
+      ['2.6','Монтаж уличных шкафов'],
+      ['2.7.1','Подключение верхней зоны'],
+      ['2.7.2','подключение зоны переключателя']
+    ]
+  };
+  const esc=v=>String(v).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  const list=items=>'<ul class="completed-list">'+items.map(item=>'<li><span class="completed-id">'+esc(item[0])+'</span><span>'+esc(item[1])+'</span></li>').join('')+'</ul>';
+  function renderPanel(){
+    const old=document.querySelector('.completed-work-panel');
+    if(!old)return;
+    const panel=document.createElement('article');
+    panel.className='panel completed-work-panel';
+    panel.dataset.completedWorks='green-fill';
+    panel.innerHTML='<h3>Фактически выполненные работы по механике и электрике на текущую дату</h3><p class="panel-subtitle">Выполнено 8 из 20 работ.</p><div class="completed-groups"><section><div class="completed-part">Механическая часть <span>2 работы</span></div>'+list(completed.mechanical)+'</section><section><div class="completed-part">Электрическая часть <span>6 работ</span></div>'+list(completed.electrical)+'</section></div><div hidden aria-hidden="true"><span id="completed-count"></span><span id="ongoing-count"></span><span id="no-fact-count"></span><ul id="ongoing-list"></ul></div>';
+    old.replaceWith(panel);
+  }
+  function replaceMetric(){
+    const old=document.querySelector('.kpi.fact');
+    if(!old||old.dataset.greenMetric==='true')return;
+    const card=old.cloneNode(true);
+    card.dataset.greenMetric='true';
+    old.replaceWith(card);
+  }
+  function setMetric(){
+    const card=document.querySelector('.kpi.fact[data-green-metric="true"]');
+    if(!card)return;
+    const label=card.querySelector('.kpi-label');
+    const value=card.querySelector('.kpi-value');
+    const note=card.querySelector('.kpi-note');
+    if(label)label.textContent='Выполнено работ по механике и электрике';
+    if(value)value.textContent='8 из 20';
+    if(note)note.textContent='по состоянию на 21.09.2026';
+  }
+  const style=document.createElement('style');
+  style.textContent='.kpi.fact .kpi-label{font-size:10px;letter-spacing:.035em;line-height:1.22}';
+  document.head.appendChild(style);
+  renderPanel();
+  replaceMetric();
+  setMetric();
+  let attempts=0;
+  const refresh=setInterval(()=>{setMetric();if(++attempts===40)clearInterval(refresh);},200);
+})();
+</script>
