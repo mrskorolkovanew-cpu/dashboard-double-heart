@@ -573,3 +573,18 @@
   const refresh=setInterval(()=>{setMetric();if(++attempts===40)clearInterval(refresh);},200);
 })();
 </script>
+
+
+<script>
+(()=>{
+  const title=document.getElementById('page-title');
+  if(title) title.textContent='Статус проекта Double Heart';
+  document.querySelector('#summary-view .overview .lead')?.remove();
+  document.querySelector('#summary-view .overview .status-tag')?.remove();
+  document.querySelector('#schedules-view .section-intro p')?.remove();
+  document.querySelectorAll('#schedules-view .schedule-label').forEach(node=>node.remove());
+  const style=document.createElement('style');
+  style.textContent='#schedules-view .schedule-grid{grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}#schedules-view .schedule{min-width:0}#schedules-view .schedule .work{min-width:300px}@media(max-width:720px){#schedules-view .schedule-grid{grid-template-columns:1fr}}';
+  document.head.appendChild(style);
+})();
+</script>
