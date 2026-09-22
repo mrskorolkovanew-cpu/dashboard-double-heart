@@ -11,8 +11,12 @@
     .wrap { max-width:1680px; margin:0 auto; padding:26px; }
     .topbar { display:flex; justify-content:space-between; gap:18px; align-items:flex-start; padding:2px 0 20px; }
     .brand { color:var(--navy); font-size:13px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+    .dashboard-tabs { display:flex; gap:8px; margin:0 0 20px; padding-bottom:12px; border-bottom:1px solid var(--line); }
+    .tab-button { appearance:none; border:1px solid transparent; border-radius:8px; padding:9px 13px; background:transparent; color:var(--muted); font:inherit; font-size:13px; font-weight:800; cursor:pointer; }
+    .tab-button:hover { color:var(--navy); background:#14233b; }.tab-button[aria-selected="true"] { color:var(--navy); background:var(--blue-soft); border-color:#3b6595; }
+    .dashboard-view[hidden] { display:none; }
     .asof { color:var(--muted); font-size:13px; text-align:right; }
-    .overview,.panel,details { background:var(--card); border:1px solid var(--line); border-radius:16px; }
+    .overview,.panel,.schedule-shell { background:var(--card); border:1px solid var(--line); border-radius:16px; }
     .overview { padding:28px; box-shadow:0 12px 30px rgba(0,0,0,.18); }
     h1 { margin:0; color:var(--navy); font-size:clamp(30px,3vw,44px); letter-spacing:-.035em; line-height:1.06; }
     h2 { margin:0; color:var(--navy); font-size:22px; letter-spacing:-.02em; }
@@ -51,29 +55,32 @@
     .open-list li:last-child,.decision-list li:last-child { border-bottom:none; }.open-list time { flex:none; color:var(--amber); font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap; }
     .decision-list li { display:grid; grid-template-columns:25px 1fr; gap:10px; padding:10px 0; border-bottom:1px solid var(--line); color:var(--ink); font-size:13px; line-height:1.42; }
     .decision-number { display:grid; place-items:center; width:23px; height:23px; border-radius:50%; background:var(--blue-soft); color:var(--blue); font-size:12px; font-weight:800; }
-    details { overflow:hidden; } summary { cursor:pointer; padding:19px 20px; color:var(--navy); font-size:16px; font-weight:800; }
-    summary span { display:block; margin-top:4px; color:var(--muted); font-size:12px; font-weight:400; line-height:1.4; }
-    .schedule-area { padding:0 18px 18px; }.schedule-grid { display:grid; grid-template-columns:repeat(3,minmax(450px,1fr)); gap:14px; overflow-x:auto; padding-bottom:3px; }
+    .schedule-shell { padding:20px; }.schedule-area { padding:0; }.schedule-grid { display:grid; grid-template-columns:repeat(3,minmax(450px,1fr)); gap:14px; overflow-x:auto; padding-bottom:3px; }
     .schedule { min-width:450px; border:1px solid var(--line); border-radius:11px; overflow:hidden; }.schedule-head { min-height:112px; padding:16px; border-bottom:1px solid var(--line); }.schedule-head.base { background:var(--blue-soft); }.schedule-head.current { background:var(--amber-soft); }.schedule-head.actual { background:var(--green-soft); }
     .schedule-label { color:var(--muted); font-size:10px; font-weight:800; letter-spacing:.09em; text-transform:uppercase; }.schedule-head h3 { margin-top:5px; font-size:18px; }.schedule-head p { margin-top:5px; color:var(--muted); font-size:12px; line-height:1.4; }.schedule-count { margin-top:8px; color:var(--navy); font-size:12px; font-weight:800; }
     .schedule .table-wrap { max-height:720px; margin:0; overflow:auto; }.schedule th { position:sticky; top:0; z-index:1; background:#14233b; }.work { min-width:230px; }.id { width:42px; color:var(--blue); font-weight:800; }.root td { background:#132641; color:var(--blue); font-weight:800; }.milestone td { background:#132137; font-weight:800; }
     .badge { display:inline-block; padding:4px 6px; border-radius:5px; font-size:11px; font-weight:800; line-height:1.2; }.badge.late { color:var(--red); background:var(--red-soft); }.badge.early { color:var(--green); background:var(--green-soft); }.badge.same { color:var(--muted); background:#26344b; }.badge.new { color:var(--violet); background:var(--violet-soft); }.fact-date { color:var(--green); font-weight:800; white-space:nowrap; }.no-fact { color:#8c99aa; }
     .loading,.error { padding:35px 16px; color:var(--muted); font-size:13px; text-align:center; }.error { color:var(--red); }.footnote { margin:14px 2px 0; color:var(--muted); font-size:12px; line-height:1.5; }
     @media (max-width:1180px) { .kpi-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }.control-grid { grid-template-columns:1fr; } }
-    @media (max-width:720px) { .wrap { padding:15px; }.overview { padding:20px; }.topbar,.section-intro { display:block; }.asof,.section-intro p { margin-top:8px; text-align:left; }.kpi-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.kpi { min-height:110px; }.kpi-value { font-size:22px; }.facts { grid-template-columns:1fr; }.schedule-area { padding:0 10px 10px; }.schedule-grid { grid-template-columns:1fr; overflow:visible; }.schedule { min-width:0; }.schedule .table-wrap { max-height:530px; } }
+    @media (max-width:720px) { .wrap { padding:15px; }.overview,.schedule-shell { padding:20px; }.topbar,.section-intro { display:block; }.asof,.section-intro p { margin-top:8px; text-align:left; }.kpi-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.kpi { min-height:110px; }.kpi-value { font-size:22px; }.facts { grid-template-columns:1fr; }.schedule-grid { grid-template-columns:1fr; overflow:visible; }.schedule { min-width:0; }.schedule .table-wrap { max-height:530px; } }
   </style>
 </head>
 <body>
   <main class="wrap">
     <header class="topbar"><div class="brand">P.SKAZKA · Double Heart</div><div class="asof">Источники: КСГ 29.07.2026 · КСГ 14.09.2026 · ежедневный мониторинг 14–21.09.2026</div></header>
+    <nav class="dashboard-tabs" role="tablist" aria-label="Разделы дашборда">
+      <button class="tab-button" id="summary-tab" type="button" role="tab" aria-selected="true" aria-controls="summary-view" data-view="summary-view">Сводка</button>
+      <button class="tab-button" id="schedules-tab" type="button" role="tab" aria-selected="false" aria-controls="schedules-view" data-view="schedules-view">Графики</button>
+    </nav>
+    <div id="summary-view" class="dashboard-view" role="tabpanel" aria-labelledby="summary-tab">
     <section class="overview" aria-labelledby="page-title">
       <h1 id="page-title">Статус проекта</h1>
       <p class="lead">Управленческая сводка по базовому и текущему графикам. Фактические даты показаны только там, где они прямо зафиксированы в ежедневном мониторинге.</p>
       <span class="status-tag">Внимание: текущая плановая дата завершения позже базовой</span>
       <div class="kpi-grid" aria-label="Ключевые показатели проекта">
-        <article class="kpi"><div class="kpi-label">Текущая плановая дата</div><div id="current-finish" class="kpi-value">—</div><div class="kpi-note">по актуальному КСГ</div></article>
         <article class="kpi"><div class="kpi-label">Базовая дата</div><div id="base-finish" class="kpi-value">—</div><div class="kpi-note">по КСГ от 29.07.2026</div></article>
-        <article class="kpi alert"><div class="kpi-label">Изменение срока</div><div id="finish-delta" class="kpi-value">—</div><div class="kpi-note">сравнение текущего и базового планов</div></article>
+        <article class="kpi"><div class="kpi-label">Текущая плановая дата</div><div id="current-finish" class="kpi-value">—</div><div class="kpi-note">по актуальному КСГ</div></article>
+        <article class="kpi alert"><div class="kpi-label">Общее отклонение</div><div id="finish-delta" class="kpi-value">—</div><div class="kpi-note">по сроку передачи</div></article>
         <article class="kpi fact"><div class="kpi-label">Ежедневный мониторинг</div><div id="fact-progress" class="kpi-value">—</div><div class="kpi-note">работ с фактом окончания</div></article>
         <article class="kpi wait"><div class="kpi-label">Бюджет: план / факт</div><div class="kpi-value">Нет данных</div><div class="kpi-note">ожидается отдельная выгрузка освоения</div></article>
       </div>
@@ -81,9 +88,9 @@
     </section>
 
     <section class="section" aria-labelledby="milestones-title">
-      <div class="section-intro"><div><h2 id="milestones-title">Контрольные точки</h2></div><p>Сопоставление ключевых вех двух плановых версий. Положительное значение — перенос позднее базового срока.</p></div>
+      <div class="section-intro"><div><h2 id="milestones-title">Отклонения по этапам</h2></div><p>Только основные синие вехи КСГ. Положительное значение — перенос позднее базового срока.</p></div>
       <div class="control-grid">
-        <article class="panel"><h3>Сроки ключевых вех</h3><div class="table-wrap"><table><thead><tr><th>Веха</th><th>Базовый срок</th><th>Текущий срок</th><th>Отклонение</th></tr></thead><tbody id="milestones"><tr><td colspan="4" class="loading">Загрузка контрольных точек…</td></tr></tbody></table></div></article>
+        <article class="panel"><h3>Сроки основных этапов</h3><div class="table-wrap"><table><thead><tr><th>Этап</th><th>Базовый срок</th><th>Текущий срок</th><th>Отклонение</th></tr></thead><tbody id="milestones"><tr><td colspan="4" class="loading">Загрузка этапов…</td></tr></tbody></table></div></article>
         <article class="panel">
           <h3>Факт в ежедневном мониторинге</h3><p class="panel-subtitle">Счётчики отражают только прямые записи в предоставленном файле, без расчёта или допущений.</p>
           <div class="facts"><div class="fact-stat"><span id="completed-count" class="fact-number">—</span><span class="fact-label">завершено</span></div><div class="fact-stat"><span id="ongoing-count" class="fact-number">—</span><span class="fact-label">начато, без даты окончания</span></div><div class="fact-stat"><span id="no-fact-count" class="fact-number">—</span><span class="fact-label">без зафиксированных дат</span></div></div>
@@ -97,15 +104,17 @@
       <article class="panel"><ol class="decision-list"><li><span class="decision-number">1</span><span><strong>Подтвердить актуальный прогноз.</strong> Текущий КСГ переносит передачу относительно базовой версии; необходимо подтвердить основание переноса и решение по сроку.</span></li><li><span class="decision-number">2</span><span><strong>Закрыть факт по начатым работам.</strong> Для работ с фактическим началом, но без даты окончания требуется внести статус и прогноз завершения в ежедневный мониторинг.</span></li><li><span class="decision-number">3</span><span><strong>Добавить освоение бюджета.</strong> Для раздела план/факт нужны исходные данные по бюджету; без них финансовые показатели на странице не рассчитываются.</span></li></ol></article>
     </section>
 
-    <details class="section" open>
-      <summary>Полные графики и ежедневный мониторинг<span>Первичный перечень всех работ сохранён. В базовом и текущем графиках показаны работы от «Механического монтажа» и далее; колонка «Длительность» исключена.</span></summary>
+    </div>
+
+    <section id="schedules-view" class="dashboard-view schedule-shell" role="tabpanel" aria-labelledby="schedules-tab" hidden>
+      <div class="section-intro"><div><h2>Детальные графики</h2></div><p>Базовый и текущий КСГ, а также ежедневный мониторинг фактических дат.</p></div>
       <div class="schedule-area"><div class="schedule-grid" aria-label="Полные источники графика">
         <article class="schedule"><header class="schedule-head base"><div class="schedule-label">Исходная версия</div><h3>Базовый график</h3><p>КСГ от 29.07.2026: механический монтаж и последующие работы.</p><div id="base-count" class="schedule-count">Загрузка…</div></header><div id="base-table" class="table-wrap"><div class="loading">Загрузка базового графика…</div></div></article>
         <article class="schedule"><header class="schedule-head current"><div class="schedule-label">Актуальная версия</div><h3>Текущий график</h3><p>КСГ от 14.09.2026 и отклонения относительно базового графика.</p><div id="current-count" class="schedule-count">Загрузка…</div></header><div id="current-table" class="table-wrap"><div class="loading">Загрузка текущего графика…</div></div></article>
         <article class="schedule"><header class="schedule-head actual"><div class="schedule-label">Только факт</div><h3>Ежедневный мониторинг</h3><p>Работы и фактические даты начала/окончания. Плановые даты не показаны.</p><div id="actual-count" class="schedule-count">20 строк</div></header><div id="actual-table" class="table-wrap"></div></article>
       </div></div>
-    </details>
     <p class="footnote">«Добавлено / изменено» означает, что в базовом КСГ нет точного совпадения по наименованию. Это не является автоматическим подтверждением новой работы: возможны переименование или изменение структуры графика.</p>
+    </section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -143,7 +152,12 @@
     const dateText = value => { const date=asDate(value); return date ? date.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric'}) : '—'; };
     const shiftDays = (from,to) => { const a=asDate(from),b=asDate(to); return a && b ? Math.round((b-a)/86400000) : null; };
     const signed = value => `${value > 0 ? '+' : ''}${value} дн.`;
-    const taskClass = row => String(row.duration ?? '').trim().startsWith('0') ? 'milestone' : (Number(row.id) === 4 ? 'root' : '');
+    const taskClass = row => {
+      if (Number(row.id) === 4) return 'root';
+      if (String(row.duration ?? '').trim().startsWith('0')) return 'milestone';
+      const letters=String(row.name ?? '').replace(/[^а-яёa-z]/gi,'');
+      return letters && letters === letters.toUpperCase() ? 'milestone' : '';
+    };
     const lastByName = (rows,name) => rows.filter(row => norm(row.name) === norm(name)).slice(-1)[0];
 
     async function readSchedule(path) {
@@ -152,9 +166,20 @@
       const bytes = await response.arrayBuffer();
       const book = XLSX.read(bytes,{type:'array',cellDates:true});
       const sheet = book.Sheets[book.SheetNames[0]];
-      const rows = XLSX.utils.sheet_to_json(sheet,{header:1,raw:true,defval:null}).slice(1)
+      const sourceRows=XLSX.utils.sheet_to_json(sheet,{header:1,raw:true,defval:null});
+      const header=sourceRows[0] || [];
+      const startColumn=header.findIndex(value => norm(value) === 'начало');
+      const endColumn=header.findIndex(value => norm(value) === 'окончание');
+      const durationColumn=header.findIndex(value => norm(value) === 'длительность');
+      const rows = sourceRows.slice(1)
         .filter(row => row[0] !== null && row[1])
-        .map(row => ({id:row[0],name:row[1],duration:row[2],start:row[3],end:row[4]}));
+        .map(row => ({
+          id:row[0],
+          name:row[1],
+          duration:durationColumn >= 0 ? row[durationColumn] : null,
+          start:row[startColumn >= 0 ? startColumn : 3],
+          end:row[endColumn >= 0 ? endColumn : 4]
+        }));
       const mechanicalStart = rows.findIndex(row => norm(row.name) === norm('МЕХАНИЧЕСКИЙ МОНТАЖ'));
       return mechanicalStart >= 0 ? rows.slice(mechanicalStart) : rows;
     }
@@ -189,12 +214,17 @@
       document.getElementById('ongoing-list').innerHTML=ongoing.map(row => `<li><span>${esc(row[1])}</span><time>${esc(row[2])}</time></li>`).join('');
     }
     function renderMilestones(base,current) {
-      const names=['ЗАВЕРШЕНИЕ МЕХАНИЧЕСКИХ РАБОТ','ЗАВЕРШЕНИЕ ЭЛЕКТРИЧЕСКОГО МОНТАЖА','ИСПЫТАНИЯ И ПНР','ПЕРЕДАЧА'];
-      document.getElementById('milestones').innerHTML=names.map(name => {
-        const baseRow=lastByName(base,name), currentRow=lastByName(current,name), delta=shiftDays(baseRow?.end,currentRow?.end);
+      const stages=[
+        {key:'МЕХАНИЧЕСКИЙ МОНТАЖ',label:'Механический монтаж'},
+        {key:'ЭЛЕКТРИЧЕСКИЙ МОНТАЖ',label:'Электрический монтаж'},
+        {key:'ИСПЫТАНИЯ И ПНР',label:'Испытания и ПНР'},
+        {key:'ПЕРЕДАЧА',label:'Передача'}
+      ];
+      document.getElementById('milestones').innerHTML=stages.map(stage => {
+        const baseRow=lastByName(base,stage.key), currentRow=lastByName(current,stage.key), delta=shiftDays(baseRow?.end,currentRow?.end);
         const css=delta === 0 ? 'delta-same' : delta > 0 ? 'delta-late' : 'delta-early';
         const value=delta === null ? 'Нет дат' : delta === 0 ? 'Без сдвига' : signed(delta);
-        return `<tr><td>${esc(name)}</td><td class="date">${dateText(baseRow?.end)}</td><td class="date">${dateText(currentRow?.end)}</td><td class="numeric ${css}">${value}</td></tr>`;
+        return `<tr><td>${esc(stage.label)}</td><td class="date">${dateText(baseRow?.end)}</td><td class="date">${dateText(currentRow?.end)}</td><td class="numeric ${css}">${value}</td></tr>`;
       }).join('');
       const baseFinish=lastByName(base,'ПЕРЕДАЧА'),currentFinish=lastByName(current,'ПЕРЕДАЧА'),delta=shiftDays(baseFinish?.end,currentFinish?.end);
       document.getElementById('base-finish').textContent=dateText(baseFinish?.end);
@@ -218,7 +248,17 @@
         document.getElementById('milestones').innerHTML='<tr><td colspan="4" class="error">Контрольные точки не загружены.</td></tr>';
       }
     }
-    window.addEventListener('DOMContentLoaded',render);
+    function setActiveView(viewId) {
+      document.querySelectorAll('.tab-button').forEach(button => {
+        const active=button.dataset.view === viewId;
+        button.setAttribute('aria-selected',String(active));
+        document.getElementById(button.dataset.view).hidden=!active;
+      });
+    }
+    function setupTabs() {
+      document.querySelectorAll('.tab-button').forEach(button => button.addEventListener('click',() => setActiveView(button.dataset.view)));
+    }
+    window.addEventListener('DOMContentLoaded',() => { setupTabs(); render(); });
   </script>
 </body>
 </html>
