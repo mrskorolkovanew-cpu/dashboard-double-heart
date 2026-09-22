@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P.SKAZKA — управленческий дашборд</title>
+  <style>
+    :root {
+      --ink: #eef3ff;
+      --muted: #aebbd5;
+      --subtle: #75829e;
+      --bg: #09101f;
+      --panel: rgba(17, 28, 52, .84);
+      --panel-2: #101d35;
+      --line: rgba(214, 225, 255, .13);
+      --blue: #6eb6ff;
+      --cyan: #71e4ed;
+      --amber: #ffcc72;
+      --red: #ff7d8d;
+      --green: #74dfa8;
+      --radius: 24px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(850px 520px at 8% -10%, rgba(87, 153, 255, .23), transparent 56%),
+        radial-gradient(700px 460px at 100% 0%, rgba(146, 101, 244, .16), transparent 52%),
+        linear-gradient(180deg, #07101f 0%, #0a1223 48%, #08101e 100%);
+    }
+    .wrap { max-width: 1500px; margin: 0 auto; padding: 28px; }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, .26);
+    }
+    .hero { display: grid; grid-template-columns: 1.36fr .84fr; gap: 18px; margin-bottom: 18px; }
+    .hero-main { position: relative; overflow: hidden; padding: 30px 32px; }
+    .hero-main::after {
+      content: ""; position: absolute; width: 260px; height: 260px; right: -90px; bottom: -120px;
+      border-radius: 50%; background: radial-gradient(circle, rgba(110, 182, 255, .24), transparent 66%);
+    }
+    .eyebrow { color: #91caff; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+    h1 { max-width: 900px; margin: 10px 0 8px; font-size: clamp(32px, 4vw, 48px); line-height: 1.04; letter-spacing: -.035em; }
+    .subtitle { max-width: 820px; color: var(--muted); font-size: 15px; line-height: 1.55; }
+    .source-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .pill { display: inline-flex; align-items: center; padding: 7px 11px; border: 1px solid var(--line); border-radius: 999px; color: #cad6ee; background: rgba(255,255,255,.035); font-size: 12px; }
+    .pill.amber { color: #ffe0a0; background: rgba(255, 204, 114, .1); border-color: rgba(255, 204, 114, .25); }
+    .hero-side { padding: 26px; }
+    .hero-side .label, .section-label { color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .finish-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 10px; margin: 17px 0 18px; }
+    .finish-date { font-size: 25px; font-weight: 750; letter-spacing: -.025em; }
+    .finish-date.current { color: #ffe0a0; text-align: right; }
+    .arrow { color: var(--amber); padding-bottom: 5px; font-size: 22px; }
+    .delay-box { display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid var(--line); padding-top: 16px; }
+    .delay { color: var(--red); font-size: 28px; font-weight: 800; }
+    .tiny { color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin: 0 0 18px; }
+    .kpi { min-height: 146px; padding: 18px; border-radius: 21px; border: 1px solid var(--line); background: linear-gradient(145deg, rgba(255,255,255,.06), rgba(255,255,255,.022)); }
+    .kpi .name { color: var(--muted); font-size: 12px; line-height: 1.35; text-transform: uppercase; letter-spacing: .07em; }
+    .kpi .value { margin: 12px 0 6px; font-size: 31px; font-weight: 800; letter-spacing: -.035em; }
+    .kpi .value.red { color: var(--red); }
+    .kpi .value.amber { color: var(--amber); }
+    .kpi .value.muted { color: #d3dbee; font-size: 21px; }
+    .grid { display: grid; grid-template-columns: 1.28fr .72fr; gap: 18px; margin-bottom: 18px; }
+    .section { padding: 24px 26px; }
+    h2 { margin: 0; font-size: 23px; letter-spacing: -.02em; }
+    .section-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .section-head p { max-width: 420px; margin: 4px 0 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+    .legend { display: flex; flex-wrap: wrap; gap: 12px; color: var(--muted); font-size: 12px; }
+    .legend span { display: flex; gap: 6px; align-items: center; }
+    .legend i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+    .calendar { display: grid; grid-template-columns: 168px 1fr 54px; gap: 12px; align-items: end; margin: 0 0 7px; }
+    .months { display: grid; grid-template-columns: repeat(4, 1fr); color: var(--subtle); font-size: 11px; text-align: center; text-transform: uppercase; letter-spacing: .08em; }
+    .track-list { display: grid; gap: 18px; }
+    .milestone { display: grid; grid-template-columns: 168px 1fr 54px; align-items: center; gap: 12px; }
+    .milestone-name { font-size: 13px; line-height: 1.3; }
+    .timeline { position: relative; height: 37px; border-radius: 10px; overflow: hidden; background: linear-gradient(90deg, rgba(255,255,255,.028) 0 24.7%, rgba(255,255,255,.08) 24.8% 25.2%, rgba(255,255,255,.028) 25.3% 49.7%, rgba(255,255,255,.08) 49.8% 50.2%, rgba(255,255,255,.028) 50.3% 74.7%, rgba(255,255,255,.08) 74.8% 75.2%, rgba(255,255,255,.028) 75.3%); }
+    .shift { position: absolute; top: 18px; height: 2px; background: linear-gradient(90deg, var(--blue), var(--amber)); }
+    .dot { position: absolute; top: 12px; width: 13px; height: 13px; border-radius: 50%; transform: translateX(-50%); }
+    .dot.plan { background: var(--blue); box-shadow: 0 0 0 4px rgba(110, 182, 255, .13); }
+    .dot.current { background: var(--amber); box-shadow: 0 0 0 4px rgba(255, 204, 114, .13); }
+    .date-pair { text-align: right; color: var(--muted); font-size: 11px; line-height: 1.3; }
+    .date-pair strong { color: #ffe0a0; display: block; font-size: 12px; }
+    .management { display: grid; gap: 12px; }
+    .finding { padding: 16px 17px; border-radius: 18px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.028); }
+    .finding .finding-title { margin-bottom: 7px; color: #ffb7c0; font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+    .finding p { margin: 0; color: #e2e9f8; font-size: 14px; line-height: 1.48; }
+    .finding.action .finding-title { color: #a9d9ff; }
+    .budget { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; margin-bottom: 18px; }
+    .empty { display: grid; place-items: center; min-height: 210px; border: 1px dashed rgba(174,187,213,.28); border-radius: 18px; padding: 22px; text-align: center; }
+    .empty strong { display: block; margin-bottom: 7px; color: #dce5f8; font-size: 16px; }
+    .empty span { display: block; max-width: 380px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .future-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .future { padding: 15px; border-radius: 16px; background: rgba(255,255,255,.028); border: 1px solid rgba(255,255,255,.075); }
+    .future b { display: block; margin-bottom: 5px; font-size: 14px; }
+    .future span { color: var(--muted); font-size: 12px; line-height: 1.4; }
+    footer { padding: 0 4px 6px; color: var(--subtle); font-size: 12px; line-height: 1.5; }
+    @media (max-width: 1180px) { .kpis { grid-template-columns: repeat(3, 1fr); } .hero, .grid, .budget { grid-template-columns: 1fr; } }
+    @media (max-width: 720px) {
+      .wrap { padding: 16px; } .hero-main, .hero-side, .section { padding: 20px; }
+      .kpis { grid-template-columns: repeat(2, 1fr); } .calendar, .milestone { grid-template-columns: 112px 1fr; }
+      .calendar > :last-child, .date-pair { display: none; } .future-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <div class="panel hero-main">
+        <div class="eyebrow">PMO · CEO dashboard · P.SKAZKA</div>
+        <h1>Double Heart — план, текущий график и бюджет</h1>
+        <p class="subtitle">Управленческий срез по срокам проекта. Базовый график сопоставлен с актуальной версией; факт выполнения, подневный план и финансовые данные будут добавлены из следующих выгрузок.</p>
+        <div class="source-row">
+          <span class="pill">Базовый график: 29.07.2026</span>
+          <span class="pill">Текущий график: 14.09.2026</span>
+          <span class="pill amber">Факт по срокам ещё не загружен</span>
+        </div>
+      </div>
+      <aside class="panel hero-side" aria-label="Сдвиг даты завершения">
+        <div class="label">Финиш проекта</div>
+        <div class="finish-row">
+          <div><div class="tiny">Базовый график</div><div class="finish-date">31 окт.</div></div>
+          <div class="arrow">→</div>
+          <div><div class="tiny" style="text-align:right">Текущий график</div><div class="finish-date current">14 дек.</div></div>
+        </div>
+        <div class="delay-box"><div><div class="delay">+44 дня</div><div class="tiny">сдвиг конечной вехи</div></div><div class="tiny" style="text-align:right">календарных<br>дней</div></div>
+      </aside>
+    </section>
+
+    <section class="kpis" aria-label="Ключевые показатели">
+      <div class="kpi"><div class="name">Сдвиг финиша</div><div class="value red">+44</div><div class="tiny">дня: 31.10 → 14.12</div></div>
+      <div class="kpi"><div class="name">Ключевых вех<br>с переносом</div><div class="value amber">4</div><div class="tiny">в сравнении двух графиков</div></div>
+      <div class="kpi"><div class="name">Диапазон<br>отклонений</div><div class="value amber">+32–44</div><div class="tiny">календарных дня</div></div>
+      <div class="kpi"><div class="name">Подневный<br>график</div><div class="value muted">Ожидается</div><div class="tiny">будет добавлен из отдельного файла</div></div>
+      <div class="kpi"><div class="name">План / факт<br>бюджета</div><div class="value muted">Ожидается</div><div class="tiny">нужна выгрузка освоения бюджета</div></div>
+    </section>
+
+    <section class="grid">
+      <div class="panel section">
+        <div class="section-head">
+          <div><h2>Ключевые вехи: базовый vs текущий график</h2><p>Текущий график — не факт выполнения. Он показывает изменение плановых дат относительно базовой версии.</p></div>
+          <div class="legend"><span><i style="background:var(--blue)"></i>базовый</span><span><i style="background:var(--amber)"></i>текущий</span></div>
+        </div>
+        <div class="calendar"><span></span><div class="months"><span>Сентябрь</span><span>Октябрь</span><span>Ноябрь</span><span>Декабрь</span></div><span></span></div>
+        <div class="track-list">
+          <div class="milestone">
+            <div class="milestone-name">Завершение механических работ</div>
+            <div class="timeline"><div class="shift" style="left:4%;width:34%;"></div><i class="dot plan" style="left:4%"></i><i class="dot current" style="left:38%"></i></div>
+            <div class="date-pair">04 сен.<strong>06 окт.</strong></div>
+          </div>
+          <div class="milestone">
+            <div class="milestone-name">Электрический монтаж</div>
+            <div class="timeline"><div class="shift" style="left:11%;width:42%;"></div><i class="dot plan" style="left:11%"></i><i class="dot current" style="left:53%"></i></div>
+            <div class="date-pair">12 сен.<strong>24 окт.</strong></div>
+          </div>
+          <div class="milestone">
+            <div class="milestone-name">Испытания и ПНР</div>
+            <div class="timeline"><div class="shift" style="left:51%;width:44%;"></div><i class="dot plan" style="left:51%"></i><i class="dot current" style="left:95%"></i></div>
+            <div class="date-pair">31 окт.<strong>14 дек.</strong></div>
+          </div>
+          <div class="milestone">
+            <div class="milestone-name">Передача</div>
+            <div class="timeline"><div class="shift" style="left:51%;width:44%;"></div><i class="dot plan" style="left:51%"></i><i class="dot current" style="left:95%"></i></div>
+            <div class="date-pair">31 окт.<strong>14 дек.</strong></div>
+          </div>
+        </div>
+      </div>
+      <aside class="panel section">
+        <div class="section-head"><div><h2>Что важно руководству</h2><p>Выводы сформированы только по двум версиям графика.</p></div></div>
+        <div class="management">
+          <div class="finding"><div class="finding-title">Срок</div><p>Конечная дата передачи перенесена с 31 октября на 14 декабря 2026 года: <b>+44 календарных дня</b>.</p></div>
+          <div class="finding"><div class="finding-title">Концентрация переноса</div><p>Наиболее поздние контрольные точки — испытания, ПНР и передача. Их перенос составляет <b>+44 дня</b>.</p></div>
+          <div class="finding action"><div class="finding-title">Необходимое решение</div><p>После загрузки подневного графика определить критические работы, ответственных и возможность сокращения отставания.</p></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="budget">
+      <div class="panel section">
+        <div class="section-head"><div><h2>Освоение бюджета: план / факт / отклонение</h2><p>Финансовые показатели будут заполнены только из предоставленной выгрузки, без оценочных значений.</p></div></div>
+        <div class="empty"><div><strong>Ожидается выгрузка по бюджету</strong><span>После загрузки покажу план и факт освоения в ₽ и %, накопительную динамику по периодам, отклонение и прогноз завершения.</span></div></div>
+      </div>
+      <div class="panel section">
+        <div class="section-head"><div><h2>Рабочий подневный график</h2><p>Операционный слой контроля для ближайших работ.</p></div></div>
+        <div class="future-grid">
+          <div class="future"><b>План на день</b><span>Задачи и контрольные сроки</span></div>
+          <div class="future"><b>Факт</b><span>Выполнение и просрочки</span></div>
+          <div class="future"><b>Ответственный</b><span>Владелец следующего действия</span></div>
+        </div>
+        <div class="empty" style="min-height:112px; margin-top:12px"><div><strong>Ожидается подневный файл</strong><span>Он добавит детализацию без перегрузки первого экрана.</span></div></div>
+      </div>
+    </section>
+    <footer>Источники текущей версии: «24177_DH INSTALLATION SCHEDULE — 29.07.2026» и «24177_DH INSTALLATION SCHEDULE — 14.09.2026». Даты показаны как плановые версии графика.</footer>
+  </main>
+</body>
+</html>
