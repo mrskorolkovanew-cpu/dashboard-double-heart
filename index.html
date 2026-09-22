@@ -3,95 +3,109 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>P.SKAZKA — графики и ежедневный мониторинг</title>
+  <title>P.SKAZKA — статус проекта</title>
   <style>
-    :root {
-      --bg: #08111f;
-      --panel: rgba(15, 27, 50, .9);
-      --line: rgba(222, 232, 255, .13);
-      --text: #eef4ff;
-      --muted: #aebbd3;
-      --blue: #78bdff;
-      --amber: #ffd182;
-      --green: #72dfa5;
-      --violet: #c9b5ff;
-      --red: #ff93a0;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0; color: var(--text); font-family: Inter, "Segoe UI", Arial, sans-serif;
-      background:
-        radial-gradient(950px 520px at 0 -10%, rgba(84, 151, 255, .19), transparent 58%),
-        radial-gradient(800px 480px at 100% 0, rgba(146, 104, 239, .15), transparent 56%),
-        linear-gradient(180deg, #07101e 0%, #091321 55%, #07101d 100%);
-    }
-    .wrap { max-width: 2050px; margin: 0 auto; padding: 26px; }
-    .hero { margin-bottom: 18px; padding: 28px 30px; border: 1px solid var(--line); border-radius: 25px; background: var(--panel); }
-    .eyebrow { color: #91caff; font-size: 12px; font-weight: 750; letter-spacing: .14em; text-transform: uppercase; }
-    h1 { margin: 10px 0 8px; font-size: clamp(30px, 3vw, 44px); letter-spacing: -.035em; line-height: 1.06; }
-    .subtitle { max-width: 1200px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.55; }
-    .sources { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
-    .source { padding: 7px 11px; border: 1px solid var(--line); border-radius: 999px; color: #c9d6ec; background: rgba(255,255,255,.035); font-size: 12px; }
-    .board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
-    .schedule { overflow: hidden; border: 1px solid var(--line); border-radius: 22px; background: var(--panel); }
-    .schedule-head { min-height: 116px; padding: 20px; border-bottom: 1px solid var(--line); }
-    .schedule-head.baseline { background: linear-gradient(135deg, rgba(120,189,255,.13), transparent 75%); }
-    .schedule-head.current { background: linear-gradient(135deg, rgba(255,209,130,.13), transparent 75%); }
-    .schedule-head.actual { background: linear-gradient(135deg, rgba(114,223,165,.12), transparent 75%); }
-    h2 { margin: 4px 0 7px; font-size: 22px; letter-spacing: -.02em; }
-    .schedule-head p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.45; }
-    .count { margin-top: 12px; color: var(--text); font-size: 12px; font-weight: 700; }
-    .table-wrap { width: 100%; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { padding: 10px 9px; border-bottom: 1px solid rgba(255,255,255,.075); text-align: left; vertical-align: top; }
-    th { position: sticky; top: 0; z-index: 1; color: #b9c8e1; background: #111e35; font-size: 10px; letter-spacing: .075em; text-transform: uppercase; }
-    td { color: #e8eefb; font-size: 12px; line-height: 1.36; }
-    td.id { width: 34px; color: var(--blue); font-weight: 750; }
-    td.work { min-width: 185px; }
-    td.date, td.duration { white-space: nowrap; color: #d8e2f6; }
-    td.muted { color: var(--muted); }
-    tr.milestone td { background: rgba(255,255,255,.022); font-weight: 700; }
-    tr.root td { color: #9dceff; font-weight: 800; }
-    .deviation { display: inline-block; border-radius: 8px; padding: 4px 6px; font-size: 10px; font-weight: 800; line-height: 1.2; white-space: nowrap; }
-    .deviation.late { color: #ffe0a4; background: rgba(255,209,130,.13); }
-    .deviation.early { color: #9df0bf; background: rgba(114,223,165,.13); }
-    .deviation.same { color: #c6d2e8; background: rgba(198,210,232,.08); }
-    .deviation.new { color: #dfd4ff; background: rgba(201,181,255,.14); white-space: normal; }
-    .fact-date { color: var(--green); font-weight: 750; white-space: nowrap; }
-    .no-fact { color: var(--muted); }
-    .loading, .error { min-height: 210px; display: grid; place-items: center; padding: 24px; color: var(--muted); text-align: center; font-size: 13px; line-height: 1.5; }
-    .error { color: var(--red); }
-    .footer { margin: 16px 4px 0; color: #8492ad; font-size: 12px; line-height: 1.5; }
-    @media (max-width: 1200px) { .board { grid-template-columns: 1fr; } .schedule-head { min-height: auto; } }
-    @media (max-width: 620px) { .wrap { padding: 14px; } .hero { padding: 20px; } th,td { padding: 8px 6px; font-size: 11px; } td.work { min-width: 150px; } }
+    :root { --navy:#10233f; --blue:#2167b0; --blue-soft:#eaf3ff; --ink:#172238; --muted:#62718a; --line:#dce4ee; --bg:#f3f6fa; --card:#fff; --amber:#7e4800; --amber-soft:#fff3df; --red:#b42318; --red-soft:#fff0ee; --green:#087443; --green-soft:#e8f8ef; --violet:#5b38a3; --violet-soft:#f1ebff; }
+    * { box-sizing:border-box; } html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:Inter,"Segoe UI",Arial,sans-serif; }
+    .wrap { max-width:1680px; margin:0 auto; padding:26px; }
+    .topbar { display:flex; justify-content:space-between; gap:18px; align-items:flex-start; padding:2px 0 20px; }
+    .brand { color:var(--navy); font-size:13px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+    .asof { color:var(--muted); font-size:13px; text-align:right; }
+    .overview,.panel,details { background:var(--card); border:1px solid var(--line); border-radius:16px; }
+    .overview { padding:28px; box-shadow:0 8px 24px rgba(28,55,88,.05); }
+    h1 { margin:0; color:var(--navy); font-size:clamp(30px,3vw,44px); letter-spacing:-.035em; line-height:1.06; }
+    h2 { margin:0; color:var(--navy); font-size:22px; letter-spacing:-.02em; }
+    h3 { margin:0; color:var(--navy); font-size:15px; }
+    p { margin:0; }
+    .lead { margin-top:10px; max-width:820px; color:var(--muted); font-size:16px; line-height:1.55; }
+    .status-tag { display:inline-flex; margin-top:15px; padding:6px 9px; border-radius:7px; background:var(--red-soft); color:var(--red); font-size:12px; font-weight:800; }
+    .kpi-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; margin-top:25px; }
+    .kpi { min-height:126px; padding:16px; border:1px solid var(--line); border-radius:12px; background:#fff; }
+    .kpi-label { color:var(--muted); font-size:11px; font-weight:800; letter-spacing:.075em; text-transform:uppercase; }
+    .kpi-value { margin-top:10px; color:var(--navy); font-size:25px; font-weight:800; letter-spacing:-.025em; line-height:1.1; }
+    .kpi-note { margin-top:6px; color:var(--muted); font-size:12px; line-height:1.35; }
+    .kpi.alert { background:var(--red-soft); border-color:#f2c7c1; }.kpi.alert .kpi-value { color:var(--red); }
+    .kpi.fact { background:var(--green-soft); border-color:#c8ebd7; }.kpi.fact .kpi-value { color:var(--green); }
+    .kpi.wait { background:#f7f9fc; }
+    .management-note { display:flex; gap:12px; align-items:flex-start; margin-top:18px; padding:14px 16px; border-left:4px solid var(--amber); background:var(--amber-soft); color:#5d3900; font-size:14px; line-height:1.48; }
+    .management-note strong { color:#422800; }
+    .section { margin-top:24px; }
+    .section-intro { display:flex; justify-content:space-between; gap:18px; align-items:end; margin-bottom:12px; }
+    .section-intro p { max-width:650px; color:var(--muted); font-size:13px; line-height:1.45; text-align:right; }
+    .control-grid { display:grid; grid-template-columns:1.25fr .95fr; gap:16px; }
+    .panel { padding:20px; }
+    .panel-subtitle { margin-top:6px; color:var(--muted); font-size:13px; line-height:1.45; }
+    .table-wrap { overflow-x:auto; margin-top:14px; }
+    table { width:100%; border-collapse:collapse; }
+    th,td { padding:11px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { color:var(--muted); font-size:10px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; white-space:nowrap; }
+    td { color:var(--ink); font-size:13px; line-height:1.36; }
+    tr:last-child td { border-bottom:none; }
+    .numeric,.date { white-space:nowrap; font-variant-numeric:tabular-nums; }
+    .delta-late { color:var(--red); font-weight:800; }.delta-early { color:var(--green); font-weight:800; }.delta-same { color:var(--muted); font-weight:700; }
+    .facts { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:9px; margin:15px 0; }
+    .fact-stat { padding:11px; border-radius:9px; background:#f6f8fb; }.fact-number { display:block; color:var(--navy); font-size:21px; font-weight:800; }.fact-label { display:block; margin-top:3px; color:var(--muted); font-size:11px; line-height:1.2; }
+    .open-list,.decision-list { margin:12px 0 0; padding:0; list-style:none; }
+    .open-list li { display:flex; justify-content:space-between; gap:12px; padding:9px 0; border-bottom:1px solid var(--line); color:var(--ink); font-size:13px; line-height:1.35; }
+    .open-list li:last-child,.decision-list li:last-child { border-bottom:none; }.open-list time { flex:none; color:var(--amber); font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap; }
+    .decision-list li { display:grid; grid-template-columns:25px 1fr; gap:10px; padding:10px 0; border-bottom:1px solid var(--line); color:var(--ink); font-size:13px; line-height:1.42; }
+    .decision-number { display:grid; place-items:center; width:23px; height:23px; border-radius:50%; background:var(--blue-soft); color:var(--blue); font-size:12px; font-weight:800; }
+    details { overflow:hidden; } summary { cursor:pointer; padding:19px 20px; color:var(--navy); font-size:16px; font-weight:800; }
+    summary span { display:block; margin-top:4px; color:var(--muted); font-size:12px; font-weight:400; line-height:1.4; }
+    .schedule-area { padding:0 18px 18px; }.schedule-grid { display:grid; grid-template-columns:repeat(3,minmax(450px,1fr)); gap:14px; overflow-x:auto; padding-bottom:3px; }
+    .schedule { min-width:450px; border:1px solid var(--line); border-radius:11px; overflow:hidden; }.schedule-head { min-height:112px; padding:16px; border-bottom:1px solid var(--line); }.schedule-head.base { background:var(--blue-soft); }.schedule-head.current { background:var(--amber-soft); }.schedule-head.actual { background:var(--green-soft); }
+    .schedule-label { color:var(--muted); font-size:10px; font-weight:800; letter-spacing:.09em; text-transform:uppercase; }.schedule-head h3 { margin-top:5px; font-size:18px; }.schedule-head p { margin-top:5px; color:var(--muted); font-size:12px; line-height:1.4; }.schedule-count { margin-top:8px; color:var(--navy); font-size:12px; font-weight:800; }
+    .schedule .table-wrap { max-height:720px; margin:0; overflow:auto; }.schedule th { position:sticky; top:0; z-index:1; background:#f9fbfd; }.work { min-width:230px; }.id { width:42px; color:var(--blue); font-weight:800; }.root td { background:#f6f9fd; color:var(--blue); font-weight:800; }.milestone td { background:#fbfcfe; font-weight:800; }
+    .badge { display:inline-block; padding:4px 6px; border-radius:5px; font-size:11px; font-weight:800; line-height:1.2; }.badge.late { color:var(--red); background:var(--red-soft); }.badge.early { color:var(--green); background:var(--green-soft); }.badge.same { color:var(--muted); background:#f0f3f7; }.badge.new { color:var(--violet); background:var(--violet-soft); }.fact-date { color:var(--green); font-weight:800; white-space:nowrap; }.no-fact { color:#8c99aa; }
+    .loading,.error { padding:35px 16px; color:var(--muted); font-size:13px; text-align:center; }.error { color:var(--red); }.footnote { margin:14px 2px 0; color:var(--muted); font-size:12px; line-height:1.5; }
+    @media (max-width:1180px) { .kpi-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }.control-grid { grid-template-columns:1fr; } }
+    @media (max-width:720px) { .wrap { padding:15px; }.overview { padding:20px; }.topbar,.section-intro { display:block; }.asof,.section-intro p { margin-top:8px; text-align:left; }.kpi-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.kpi { min-height:110px; }.kpi-value { font-size:22px; }.facts { grid-template-columns:1fr; }.schedule-area { padding:0 10px 10px; }.schedule-grid { grid-template-columns:1fr; overflow:visible; }.schedule { min-width:0; }.schedule .table-wrap { max-height:530px; } }
   </style>
 </head>
 <body>
   <main class="wrap">
-    <section class="hero">
-      <div class="eyebrow">PMO · P.SKAZKA · DOUBLE HEART</div>
-      <h1>Базовый график, текущий график и ежедневный мониторинг</h1>
-      <p class="subtitle">Все строки исходных графиков опубликованы параллельно. В центральной колонке показано отклонение актуальной версии от базовой; справа — только фактические даты из рабочего ежедневного мониторинга, без плановых дат.</p>
-      <div class="sources"><span class="source">Базовый КСГ: 29.07.2026</span><span class="source">Текущий КСГ: 14.09.2026</span><span class="source">Ежедневный мониторинг: 14–21.09.2026</span></div>
+    <header class="topbar"><div class="brand">P.SKAZKA · Double Heart</div><div class="asof">Источники: КСГ 29.07.2026 · КСГ 14.09.2026 · ежедневный мониторинг 14–21.09.2026</div></header>
+    <section class="overview" aria-labelledby="page-title">
+      <h1 id="page-title">Статус проекта</h1>
+      <p class="lead">Управленческая сводка по базовому и текущему графикам. Фактические даты показаны только там, где они прямо зафиксированы в ежедневном мониторинге.</p>
+      <span class="status-tag">Внимание: текущая плановая дата завершения позже базовой</span>
+      <div class="kpi-grid" aria-label="Ключевые показатели проекта">
+        <article class="kpi"><div class="kpi-label">Текущая плановая дата</div><div id="current-finish" class="kpi-value">—</div><div class="kpi-note">по актуальному КСГ</div></article>
+        <article class="kpi"><div class="kpi-label">Базовая дата</div><div id="base-finish" class="kpi-value">—</div><div class="kpi-note">по КСГ от 29.07.2026</div></article>
+        <article class="kpi alert"><div class="kpi-label">Изменение срока</div><div id="finish-delta" class="kpi-value">—</div><div class="kpi-note">сравнение текущего и базового планов</div></article>
+        <article class="kpi fact"><div class="kpi-label">Ежедневный мониторинг</div><div id="fact-progress" class="kpi-value">—</div><div class="kpi-note">работ с фактом окончания</div></article>
+        <article class="kpi wait"><div class="kpi-label">Бюджет: план / факт</div><div class="kpi-value">Нет данных</div><div class="kpi-note">ожидается отдельная выгрузка освоения</div></article>
+      </div>
+      <div class="management-note"><strong>Главное для решения.</strong><span>Сдвиг отражает изменение плановой версии графика, а не автоматически подтверждённое фактическое отставание. Требуется подтвердить основание переноса и актуальный прогноз завершения.</span></div>
     </section>
 
-    <section class="board" aria-label="Три графика проекта">
-      <article class="schedule">
-        <header class="schedule-head baseline"><div class="eyebrow">СЛЕВА · ИСХОДНАЯ ВЕРСИЯ</div><h2>Базовый график</h2><p>Полный КСГ от 29.07.2026: наименования, длительность и плановые даты.</p><div id="base-count" class="count">Загрузка строк…</div></header>
-        <div id="base-table" class="table-wrap"><div class="loading">Загружается базовый график…</div></div>
-      </article>
-
-      <article class="schedule">
-        <header class="schedule-head current"><div class="eyebrow">ЦЕНТР · АКТУАЛЬНАЯ ВЕРСИЯ</div><h2>Текущий график и отклонения</h2><p>Полный КСГ от 14.09.2026. «Добавлено / изменено» — нет точного совпадения по наименованию в базовом КСГ.</p><div id="current-count" class="count">Загрузка строк…</div></header>
-        <div id="current-table" class="table-wrap"><div class="loading">Загружается текущий график…</div></div>
-      </article>
-
-      <article class="schedule">
-        <header class="schedule-head actual"><div class="eyebrow">СПРАВА · ТОЛЬКО ФАКТ</div><h2>Статус ежедневного мониторинга</h2><p>Полный рабочий перечень. Показаны только фактические даты начала и окончания; плановые даты намеренно скрыты.</p><div id="actual-count" class="count">20 строк рабочего мониторинга</div></header>
-        <div id="actual-table" class="table-wrap"></div>
-      </article>
+    <section class="section" aria-labelledby="milestones-title">
+      <div class="section-intro"><div><h2 id="milestones-title">Контрольные точки</h2></div><p>Сопоставление ключевых вех двух плановых версий. Положительное значение — перенос позднее базового срока.</p></div>
+      <div class="control-grid">
+        <article class="panel"><h3>Сроки ключевых вех</h3><div class="table-wrap"><table><thead><tr><th>Веха</th><th>Базовый срок</th><th>Текущий срок</th><th>Отклонение</th></tr></thead><tbody id="milestones"><tr><td colspan="4" class="loading">Загрузка контрольных точек…</td></tr></tbody></table></div></article>
+        <article class="panel">
+          <h3>Факт в ежедневном мониторинге</h3><p class="panel-subtitle">Счётчики отражают только прямые записи в предоставленном файле, без расчёта или допущений.</p>
+          <div class="facts"><div class="fact-stat"><span id="completed-count" class="fact-number">—</span><span class="fact-label">завершено</span></div><div class="fact-stat"><span id="ongoing-count" class="fact-number">—</span><span class="fact-label">начато, без даты окончания</span></div><div class="fact-stat"><span id="no-fact-count" class="fact-number">—</span><span class="fact-label">без зафиксированных дат</span></div></div>
+          <h3>Начаты, но окончание не внесено</h3><ul id="ongoing-list" class="open-list"><li><span>Загрузка фактических данных…</span></li></ul>
+        </article>
+      </div>
     </section>
-    <p class="footer">Фактическая дата выводится только при прямой фиксации в ежедневном статусе. Пустая ячейка означает, что дата факта в предоставленном мониторинге не указана.</p>
+
+    <section class="section" aria-labelledby="decisions-title">
+      <div class="section-intro"><div><h2 id="decisions-title">Требуемые управленческие действия</h2></div><p>Это не выводы о виновных или факте задержки — только вопросы, которые данные ещё не закрывают.</p></div>
+      <article class="panel"><ol class="decision-list"><li><span class="decision-number">1</span><span><strong>Подтвердить актуальный прогноз.</strong> Текущий КСГ переносит передачу относительно базовой версии; необходимо подтвердить основание переноса и решение по сроку.</span></li><li><span class="decision-number">2</span><span><strong>Закрыть факт по начатым работам.</strong> Для работ с фактическим началом, но без даты окончания требуется внести статус и прогноз завершения в ежедневный мониторинг.</span></li><li><span class="decision-number">3</span><span><strong>Добавить освоение бюджета.</strong> Для раздела план/факт нужны исходные данные по бюджету; без них финансовые показатели на странице не рассчитываются.</span></li></ol></article>
+    </section>
+
+    <details class="section" open>
+      <summary>Полные графики и ежедневный мониторинг<span>Первичный перечень всех работ сохранён. В базовом и текущем графиках показаны работы от «Механического монтажа» и далее; колонка «Длительность» исключена.</span></summary>
+      <div class="schedule-area"><div class="schedule-grid" aria-label="Полные источники графика">
+        <article class="schedule"><header class="schedule-head base"><div class="schedule-label">Исходная версия</div><h3>Базовый график</h3><p>КСГ от 29.07.2026: механический монтаж и последующие работы.</p><div id="base-count" class="schedule-count">Загрузка…</div></header><div id="base-table" class="table-wrap"><div class="loading">Загрузка базового графика…</div></div></article>
+        <article class="schedule"><header class="schedule-head current"><div class="schedule-label">Актуальная версия</div><h3>Текущий график</h3><p>КСГ от 14.09.2026 и отклонения относительно базового графика.</p><div id="current-count" class="schedule-count">Загрузка…</div></header><div id="current-table" class="table-wrap"><div class="loading">Загрузка текущего графика…</div></div></article>
+        <article class="schedule"><header class="schedule-head actual"><div class="schedule-label">Только факт</div><h3>Ежедневный мониторинг</h3><p>Работы и фактические даты начала/окончания. Плановые даты не показаны.</p><div id="actual-count" class="schedule-count">20 строк</div></header><div id="actual-table" class="table-wrap"></div></article>
+      </div></div>
+    </details>
+    <p class="footnote">«Добавлено / изменено» означает, что в базовом КСГ нет точного совпадения по наименованию. Это не является автоматическим подтверждением новой работы: возможны переименование или изменение структуры графика.</p>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -118,21 +132,19 @@
       ['2.7.4','Подключение полевого шкафа','—','—'],
       ['2.7.5','Подключение шкафа внутри помещения','—','—']
     ];
-
     const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
     const norm = value => String(value ?? '').toLowerCase().replace(/ё/g,'е').replace(/[^а-яa-z0-9]+/gi,' ').trim();
     const asDate = value => {
       if (!value) return null;
       if (value instanceof Date && !Number.isNaN(value.getTime())) return value;
-      if (typeof value === 'number') { const d = XLSX.SSF.parse_date_code(value); return d ? new Date(d.y, d.m - 1, d.d) : null; }
-      const d = new Date(value); return Number.isNaN(d.getTime()) ? null : d;
+      if (typeof value === 'number') { const parsed = XLSX.SSF.parse_date_code(value); return parsed ? new Date(parsed.y,parsed.m-1,parsed.d) : null; }
+      const parsed = new Date(value); return Number.isNaN(parsed.getTime()) ? null : parsed;
     };
-    const dateText = value => {
-      const d = asDate(value); return d ? d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric'}) : '—';
-    };
-    const days = (a,b) => { const da=asDate(a), db=asDate(b); return da && db ? Math.round((db-da)/86400000) : null; };
-    const signed = value => value === 0 ? '0 дн.' : `${value > 0 ? '+' : ''}${value} дн.`;
-    const taskClass = row => row.duration && String(row.duration).trim().startsWith('0') ? 'milestone' : (row.id === 1 ? 'root' : '');
+    const dateText = value => { const date=asDate(value); return date ? date.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric'}) : '—'; };
+    const shiftDays = (from,to) => { const a=asDate(from),b=asDate(to); return a && b ? Math.round((b-a)/86400000) : null; };
+    const signed = value => `${value > 0 ? '+' : ''}${value} дн.`;
+    const taskClass = row => String(row.duration ?? '').trim().startsWith('0') ? 'milestone' : (Number(row.id) === 4 ? 'root' : '');
+    const lastByName = (rows,name) => rows.filter(row => norm(row.name) === norm(name)).slice(-1)[0];
 
     async function readSchedule(path) {
       const response = await fetch(path);
@@ -140,50 +152,73 @@
       const bytes = await response.arrayBuffer();
       const book = XLSX.read(bytes,{type:'array',cellDates:true});
       const sheet = book.Sheets[book.SheetNames[0]];
-      return XLSX.utils.sheet_to_json(sheet,{header:1,raw:true,defval:null}).slice(1)
+      const rows = XLSX.utils.sheet_to_json(sheet,{header:1,raw:true,defval:null}).slice(1)
         .filter(row => row[0] !== null && row[1])
         .map(row => ({id:row[0],name:row[1],duration:row[2],start:row[3],end:row[4]}));
+      const mechanicalStart = rows.findIndex(row => norm(row.name) === norm('МЕХАНИЧЕСКИЙ МОНТАЖ'));
+      return mechanicalStart >= 0 ? rows.slice(mechanicalStart) : rows;
     }
 
     function planTable(rows) {
-      return `<table><thead><tr><th>ID</th><th>Работа</th><th>Длит.</th><th>Начало</th><th>Окончание</th></tr></thead><tbody>${rows.map(row => `<tr class="${taskClass(row)}"><td class="id">${esc(row.id)}</td><td class="work">${esc(row.name)}</td><td class="duration">${esc(row.duration ?? '—')}</td><td class="date">${dateText(row.start)}</td><td class="date">${dateText(row.end)}</td></tr>`).join('')}</tbody></table>`;
+      return `<table><thead><tr><th>ID</th><th>Работа</th><th>Начало</th><th>Окончание</th></tr></thead><tbody>${rows.map(row => `<tr class="${taskClass(row)}"><td class="id">${esc(row.id)}</td><td class="work">${esc(row.name)}</td><td class="date">${dateText(row.start)}</td><td class="date">${dateText(row.end)}</td></tr>`).join('')}</tbody></table>`;
     }
-
-    function currentTable(rows, baseline) {
-      const pool = new Map();
-      baseline.forEach(row => { const key=norm(row.name); const list=pool.get(key) || []; list.push(row); pool.set(key,list); });
-      const change = row => {
-        const list = pool.get(norm(row.name)); const base = list && list.length ? list.shift() : null;
-        if (!base) return '<span class="deviation new">Добавлено / изменено</span>';
-        const startShift = days(base.start,row.start), endShift = days(base.end,row.end);
-        if (startShift === null && endShift === null) return '<span class="deviation same">Нет дат</span>';
-        if (startShift === 0 && endShift === 0) return '<span class="deviation same">Без сдвига</span>';
-        const values = [startShift !== null ? `нач. ${signed(startShift)}` : '', endShift !== null ? `кон. ${signed(endShift)}` : ''].filter(Boolean).join('<br>');
-        const className = (endShift ?? startShift) > 0 ? 'late' : 'early';
-        return `<span class="deviation ${className}">${values}</span>`;
-      };
-      return `<table><thead><tr><th>ID</th><th>Работа</th><th>Длит.</th><th>Начало</th><th>Окончание</th><th>Отклонение</th></tr></thead><tbody>${rows.map(row => `<tr class="${taskClass(row)}"><td class="id">${esc(row.id)}</td><td class="work">${esc(row.name)}</td><td class="duration">${esc(row.duration ?? '—')}</td><td class="date">${dateText(row.start)}</td><td class="date">${dateText(row.end)}</td><td>${change(row)}</td></tr>`).join('')}</tbody></table>`;
+    function deviation(base,row) {
+      if (!base) return '<span class="badge new">Добавлено / изменено</span>';
+      const start=shiftDays(base.start,row.start), end=shiftDays(base.end,row.end);
+      if (start === null && end === null) return '<span class="badge same">Нет дат</span>';
+      if (start === 0 && end === 0) return '<span class="badge same">Без сдвига</span>';
+      const value=[start !== null ? `нач. ${signed(start)}` : '',end !== null ? `кон. ${signed(end)}` : ''].filter(Boolean).join('<br>');
+      return `<span class="badge ${(end ?? start) > 0 ? 'late' : 'early'}">${value}</span>`;
     }
-
+    function currentTable(rows,baseline) {
+      const pool=new Map();
+      baseline.forEach(row => { const key=norm(row.name); const list=pool.get(key)||[]; list.push(row); pool.set(key,list); });
+      return `<table><thead><tr><th>ID</th><th>Работа</th><th>Начало</th><th>Окончание</th><th>Отклонение</th></tr></thead><tbody>${rows.map(row => { const list=pool.get(norm(row.name)); const base=list && list.length ? list.shift() : null; return `<tr class="${taskClass(row)}"><td class="id">${esc(row.id)}</td><td class="work">${esc(row.name)}</td><td class="date">${dateText(row.start)}</td><td class="date">${dateText(row.end)}</td><td>${deviation(base,row)}</td></tr>`; }).join('')}</tbody></table>`;
+    }
     function actualTable(rows) {
       return `<table><thead><tr><th>№</th><th>Работа</th><th>Факт начала</th><th>Факт окончания</th></tr></thead><tbody>${rows.map(row => `<tr><td class="id">${esc(row[0])}</td><td class="work">${esc(row[1])}</td><td class="${row[2] === '—' ? 'no-fact' : 'fact-date'}">${esc(row[2])}</td><td class="${row[3] === '—' ? 'no-fact' : 'fact-date'}">${esc(row[3])}</td></tr>`).join('')}</tbody></table>`;
     }
-
+    function renderFactSummary() {
+      const completed=actualRows.filter(row => row[3] !== '—');
+      const ongoing=actualRows.filter(row => row[2] !== '—' && row[3] === '—');
+      const empty=actualRows.filter(row => row[2] === '—' && row[3] === '—');
+      document.getElementById('completed-count').textContent=completed.length;
+      document.getElementById('ongoing-count').textContent=ongoing.length;
+      document.getElementById('no-fact-count').textContent=empty.length;
+      document.getElementById('fact-progress').textContent=`${completed.length} из ${actualRows.length}`;
+      document.getElementById('ongoing-list').innerHTML=ongoing.map(row => `<li><span>${esc(row[1])}</span><time>${esc(row[2])}</time></li>`).join('');
+    }
+    function renderMilestones(base,current) {
+      const names=['ЗАВЕРШЕНИЕ МЕХАНИЧЕСКИХ РАБОТ','ЗАВЕРШЕНИЕ ЭЛЕКТРИЧЕСКОГО МОНТАЖА','ИСПЫТАНИЯ И ПНР','ПЕРЕДАЧА'];
+      document.getElementById('milestones').innerHTML=names.map(name => {
+        const baseRow=lastByName(base,name), currentRow=lastByName(current,name), delta=shiftDays(baseRow?.end,currentRow?.end);
+        const css=delta === 0 ? 'delta-same' : delta > 0 ? 'delta-late' : 'delta-early';
+        const value=delta === null ? 'Нет дат' : delta === 0 ? 'Без сдвига' : signed(delta);
+        return `<tr><td>${esc(name)}</td><td class="date">${dateText(baseRow?.end)}</td><td class="date">${dateText(currentRow?.end)}</td><td class="numeric ${css}">${value}</td></tr>`;
+      }).join('');
+      const baseFinish=lastByName(base,'ПЕРЕДАЧА'),currentFinish=lastByName(current,'ПЕРЕДАЧА'),delta=shiftDays(baseFinish?.end,currentFinish?.end);
+      document.getElementById('base-finish').textContent=dateText(baseFinish?.end);
+      document.getElementById('current-finish').textContent=dateText(currentFinish?.end);
+      document.getElementById('finish-delta').textContent=delta === null ? 'Нет дат' : signed(delta);
+    }
     async function render() {
-      document.getElementById('actual-table').innerHTML = actualTable(actualRows);
+      document.getElementById('actual-table').innerHTML=actualTable(actualRows);
+      renderFactSummary();
       try {
-        const [baseline,current] = await Promise.all([readSchedule('base-schedule.xlsx'),readSchedule('current-schedule.xlsx')]);
-        document.getElementById('base-table').innerHTML = planTable(baseline);
-        document.getElementById('current-table').innerHTML = currentTable(current,baseline);
-        document.getElementById('base-count').textContent = `${baseline.length} строк полного базового КСГ`;
-        document.getElementById('current-count').textContent = `${current.length} строк полного текущего КСГ`;
+        const [base,current]=await Promise.all([readSchedule('base-schedule.xlsx'),readSchedule('current-schedule.xlsx')]);
+        document.getElementById('base-table').innerHTML=planTable(base);
+        document.getElementById('current-table').innerHTML=currentTable(current,base);
+        document.getElementById('base-count').textContent=`${base.length} строк`;
+        document.getElementById('current-count').textContent=`${current.length} строк`;
+        renderMilestones(base,current);
       } catch (error) {
-        const message = `<div class="error">График не удалось загрузить. Обновите страницу или проверьте наличие исходных файлов.</div>`;
-        document.getElementById('base-table').innerHTML = message;
-        document.getElementById('current-table').innerHTML = message;
+        const message='<div class="error">График не удалось загрузить. Проверьте наличие исходных файлов в репозитории.</div>';
+        document.getElementById('base-table').innerHTML=message;
+        document.getElementById('current-table').innerHTML=message;
+        document.getElementById('milestones').innerHTML='<tr><td colspan="4" class="error">Контрольные точки не загружены.</td></tr>';
       }
     }
-    window.addEventListener('DOMContentLoaded', render);
+    window.addEventListener('DOMContentLoaded',render);
   </script>
 </body>
 </html>
