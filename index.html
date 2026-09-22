@@ -395,3 +395,51 @@
   render();
 })();
 </script>
+
+
+<script>
+(()=>{
+  const rows=[
+    ['Механическая часть','Регулировка треков зоны техобслуживания','22.09.2026','Планируемый срок завершения — 24.09.26','+2 дн.'],
+    ['Электрическая часть','Установка шкафов в техпомещении','13.09.2026','Завершено — 19.09.26','+6 дн.'],
+    ['Электрическая часть','Монтаж кабельных лотков над шкафами в тех. помещении','15.09.2026','Ожидаемый срок завершения — 23–24.09.26','+8–9 дн.'],
+    ['Электрическая часть','Подключение зоны технического обслуживания','20.09.2026','Ожидаемый срок завершения — 25.09.26','+5 дн.']
+  ];
+  const esc=v=>String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  function render(){
+    document.querySelector('.schedule-head.actual')?.closest('.schedule')?.remove();
+    const scheduleText=document.querySelector('#schedules-view .section-intro p');
+    if(scheduleText)scheduleText.textContent='Базовый и текущий КСГ.';
+    const section=document.getElementById('monitor-deviations');
+    if(!section)return;
+    const intro=section.querySelector('.section-intro p');
+    if(intro)intro.textContent='Показаны только работы с явно указанным результатом или прогнозом в ежедневном мониторинге.';
+    const table=section.querySelector('table');
+    if(!table)return;
+    let part='';
+    table.innerHTML='<thead><tr><th>Работа</th><th>Плановое окончание</th><th>Итог ежедневного мониторинга</th><th>Отклонение</th></tr></thead><tbody>'+rows.map(r=>{const heading=r[0]!==part?(part=r[0],'<tr class="monitor-part-row"><td colspan="4">'+esc(part)+'</td></tr>'):'';return heading+'<tr><td>'+esc(r[1])+'</td><td class="date">'+esc(r[2])+'</td><td>'+esc(r[3])+'</td><td class="delta-late">'+esc(r[4])+'</td></tr>';}).join('')+'</tbody>';
+  }
+  const style=document.createElement('style');
+  style.textContent='.monitor-part-row td{padding:10px!important;background:#17382b!important;color:#7ee0a9!important;font-size:11px!important;font-weight:800!important;letter-spacing:.08em;text-transform:uppercase}.monitor-part-row+tr td{border-top:0}';
+  document.head.appendChild(style);
+  render();
+  let attempt=0;const refresh=setInterval(()=>{render();if(++attempt===12)clearInterval(refresh);},250);
+})();
+</script>
+
+<script>
+(()=>{
+  function update(){
+    const card=document.querySelector('.kpi.fact');
+    if(!card)return;
+    const label=card.querySelector('.kpi-label');
+    const value=card.querySelector('.kpi-value');
+    const note=card.querySelector('.kpi-note');
+    if(label)label.textContent='Выполнено задач';
+    if(value)value.textContent='8 из 20';
+    if(note)note.textContent='по состоянию на 21.09.2026';
+  }
+  update();
+  let n=0;const timer=setInterval(()=>{update();if(++n===12)clearInterval(timer);},250);
+})();
+</script>
