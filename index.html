@@ -262,3 +262,50 @@
   </script>
 </body>
 </html>
+<script>
+(()=>{
+  const daily=[
+    ['1.1','Регулировка фланцев трэков для обеспечения соосности со стрелкой техобслуживания','—','—'],
+    ['1.2','Регулировка стрелки техобслуживания для обеспечения соосности с треками','09.09.2026','16.09.2026'],
+    ['1.3','Регулировка треков зоны техобслуживания','16.09.2026','—'],
+    ['1.4','Подливка фланцев колонн зоны стрелки техобслуживания и треков зоны техобслуживания','—','—'],
+    ['1.5','Твердение безусадочного раствора','—','—'],
+    ['1.6','Монтаж пневмосистемы','—','—'],
+    ['1.7','Протяжка фланцев колонн зоны стрелки техобслуживания и трэков зоны техобслуживания','—','—'],
+    ['1.8','Установка тележек','—','—'],
+    ['2.1','Установка шкафов в техпомещении','—','—'],
+    ['2.2','Монтаж кабельных лотков над шкафами в тех. помещении','18.09.2026','19.09.2026'],
+    ['2.3','Прокладка кабеля датчиков температуры','11.09.2026','—'],
+    ['2.4','Прокладка кабеля питания вентиляторов','17.09.2026','—'],
+    ['2.5','Поставка и монтаж кронштейнов для корпусов DAP2A и DAP2B.','14.09.2026','—'],
+    ['2.6','Монтаж уличных шкафов','17.09.2026','—'],
+    ['2.7','Подключение и маркировка:','—','—'],
+    ['2.7.1','Подключение верхней зоны','—','—'],
+    ['2.7.2','подключение зоны переключателя','16.09.2026','16.09.2026'],
+    ['2.7.3','подключение зоны технического обслуживания','16.09.2026','—'],
+    ['2.7.4','подключение к полевой распределительной коробке','—','—'],
+    ['2.7.5','подключение шкафов внутри помещения','—','—']
+  ];
+  function apply(){
+    const labels=document.querySelectorAll('.kpi-grid .kpi .kpi-label');
+    if(labels[0]) labels[0].textContent='Дата Zamperla от 29.07.26';
+    if(labels[1]) labels[1].textContent='Предлагаемая новая дата Zamperla от 14.09.26';
+    const base=document.querySelector('.schedule-head.base h3');
+    const current=document.querySelector('.schedule-head.current h3');
+    if(base) base.textContent='Дата Zamperla от 29.07.26';
+    if(current) current.textContent='Предлагаемая новая дата Zamperla от 14.09.26';
+    const actual=document.getElementById('actual-table');
+    if(actual){
+      actual.innerHTML='<table><thead><tr><th>№</th><th>Работа</th><th>Факт начала</th><th>Факт окончания</th></tr></thead><tbody>'+daily.map(function(r){const group=r[0]==='1.1'?'Механическая часть':r[0]==='2.1'?'Электрическая часть':'';return (group?'<tr class="actual-section"><th colspan="4">'+group+'</th></tr>':'')+'<tr><td class="id">'+r[0]+'</td><td class="work">'+r[1]+'</td><td class="'+(r[2]==='—'?'no-fact':'fact-date')+'">'+r[2]+'</td><td class="'+(r[3]==='—'?'no-fact':'fact-date')+'">'+r[3]+'</td></tr>';}).join('')+'</tbody></table>';
+    }
+    const table=document.querySelector('#current-table table');
+    if(table) table.querySelectorAll('tr').forEach(function(row){if(row.children.length>4) row.lastElementChild.remove();});
+    document.querySelectorAll('.schedule:nth-child(2) .footnote').forEach(function(node){node.remove();});
+  }
+  const style=document.createElement('style');
+  style.textContent='.actual-section th{padding:10px;background:#17382b;color:#7ee0a9;border-bottom:1px solid #2c7350;font-size:11px;text-align:left;}';
+  document.head.appendChild(style);
+  function start(){apply();let attempts=0;const timer=setInterval(function(){apply();if(++attempts===20)clearInterval(timer);},200);}
+  if(document.readyState==='loading') window.addEventListener('DOMContentLoaded',start); else start();
+})();
+</script>
