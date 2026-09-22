@@ -443,3 +443,20 @@
   let n=0;const timer=setInterval(()=>{update();if(++n===12)clearInterval(timer);},250);
 })();
 </script>
+
+<script>
+(()=>{
+  const card=document.querySelector('.kpi.fact');
+  if(!card)return;
+  function apply(){
+    const label=card.querySelector('.kpi-label');
+    const value=card.querySelector('.kpi-value');
+    const note=card.querySelector('.kpi-note');
+    if(label&&label.textContent!=='Выполнено задач')label.textContent='Выполнено задач';
+    if(value&&value.textContent!=='8 из 20')value.textContent='8 из 20';
+    if(note&&note.textContent!=='по состоянию на 21.09.2026')note.textContent='по состоянию на 21.09.2026';
+  }
+  apply();
+  new MutationObserver(apply).observe(card,{childList:true,subtree:true,characterData:true});
+})();
+</script>
