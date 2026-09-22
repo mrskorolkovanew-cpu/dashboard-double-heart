@@ -488,3 +488,33 @@
   if(headers?.[2])headers[2].textContent='по КСГ от 14.09.26';
 })();
 </script>
+
+
+<script>
+(()=>{
+  const completed={
+    mechanical:[['1.2','Регулировка стрелки техобслуживания для обеспечения соосности с треками']],
+    electrical:[['2.1','Установка шкафов в техпомещении'],['2.2','Монтаж кабельных лотков над шкафами в тех. помещении'],['2.3','Прокладка кабеля датчиков температуры'],['2.4','Прокладка кабеля питания вентиляторов'],['2.5','Поставка и монтаж кронштейнов для корпусов DAP2A и DAP2B'],['2.6','Монтаж уличных шкафов'],['2.7.2','Подключение зоны переключателя']]
+  };
+  const escapeHtml=value=>String(value).replace(/[&<>]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[char]));
+  const makeList=rows=>'<ul class=completed-list>'+rows.map(row=>'<li><span class=completed-id>'+escapeHtml(row[0])+'</span><span>'+escapeHtml(row[1])+'</span></li>').join('')+'</ul>';
+  function apply(){
+    const summary=document.getElementById('summary-view');
+    if(!summary)return;
+    summary.querySelector('[aria-labelledby=decisions-title]')?.remove();
+    const oldTitle=[...summary.querySelectorAll('h3')].find(node=>node.textContent.trim()==='Факт в ежедневном мониторинге');
+    const oldPanel=oldTitle?.closest('article.panel');
+    if(!oldPanel||oldPanel.dataset.completedWorks==='true')return;
+    const panel=document.createElement('article');
+    panel.className='panel completed-work-panel';
+    panel.dataset.completedWorks='true';
+    panel.innerHTML='<h3>Фактически выполненные работы по механике и электрике на текущую дату</h3><p class=panel-subtitle>Выполнено 8 из 20 работ.</p><div class=completed-groups><section><div class=completed-part>Механическая часть <span>1 работа</span></div>'+makeList(completed.mechanical)+'</section><section><div class=completed-part>Электрическая часть <span>7 работ</span></div>'+makeList(completed.electrical)+'</section></div><div hidden aria-hidden=true><span id=completed-count></span><span id=ongoing-count></span><span id=no-fact-count></span><ul id=ongoing-list></ul></div>';
+    oldPanel.replaceWith(panel);
+  }
+  const style=document.createElement('style');
+  style.textContent='.completed-work-panel{min-width:0}.completed-groups{margin-top:14px;display:grid;gap:12px}.completed-part{padding:8px 10px;background:#17382b;color:#7ee0a9;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}.completed-part span{float:right;color:#aebbd3;font-size:10px}.completed-list{margin:0;padding:0;list-style:none}.completed-list li{display:grid;grid-template-columns:44px 1fr;gap:8px;padding:7px 2px;border-bottom:1px solid var(--line);font-size:12px;line-height:1.35}.completed-list li:last-child{border-bottom:none}.completed-id{color:var(--green);font-weight:800;font-variant-numeric:tabular-nums}';
+  document.head.appendChild(style);
+  apply();
+  let attempts=0;const refresh=setInterval(()=>{apply();if(++attempts===30)clearInterval(refresh);},250);
+})();
+</script>
