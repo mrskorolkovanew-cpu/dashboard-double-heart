@@ -588,3 +588,24 @@
   document.head.appendChild(style);
 })();
 </script>
+
+<script>
+(()=>{
+  const norm3=v=>String(v??'').toLowerCase().replace(/ё/g,'е').replace(/[^а-яa-z0-9]+/gi,' ').trim();
+  const esc3=v=>String(v??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  const date3=v=>{if(!v)return null;if(v instanceof Date)return v;if(typeof v==='number'){const q=XLSX.SSF.parse_date_code(v);return q?new Date(q.y,q.m-1,q.d):null}const q=new Date(v);return Number.isNaN(q.getTime())?null:q};
+  const text3=v=>{const d=date3(v);return d?d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric'}):'—'};
+  const class3=r=>{if(Number(r.id)===4)return 'root';if(String(r.duration??'').trim().startsWith('0'))return 'milestone';const s=String(r.name??'').replace(/[^а-яёa-z]/gi,'');return s&&s===s.toUpperCase()?'milestone':''};
+  async function read3(path){const response=await fetch(path);if(!response.ok)throw new Error(path);const book=XLSX.read(await response.arrayBuffer(),{type:'array',cellDates:true});const sourceRows=XLSX.utils.sheet_to_json(book.Sheets[book.SheetNames[0]],{header:1,raw:true,defval:null});const header=sourceRows[0]||[];const start=header.findIndex(v=>norm3(v)==='начало');const end=header.findIndex(v=>norm3(v)==='окончание');const duration=header.findIndex(v=>norm3(v)==='длительность');return sourceRows.slice(1).filter(r=>r[0]!==null&&r[1]).map(r=>({id:r[0],name:r[1],duration:duration>=0?r[duration]:null,start:r[start>=0?start:3],end:r[end>=0?end:4]}));}
+  function plan3(rows){return '<table><thead><tr><th>ID</th><th>Работа</th><th>Начало</th><th>Окончание</th></tr></thead><tbody>'+rows.map(r=>'<tr class="'+class3(r)+'"><td class="id">'+esc3(r.id)+'</td><td class="work">'+esc3(r.name)+'</td><td class="date">'+text3(r.start)+'</td><td class="date">'+text3(r.end)+'</td></tr>').join('')+'</tbody></table>'}
+  const last3=(rows,key)=>rows.filter(r=>norm3(r.name)===norm3(key)).slice(-1)[0];
+  const shift3=(a,b)=>{const x=date3(a),y=date3(b);return x&&y?Math.round((y-x)/86400000):null};
+  const inclusive3=v=>v===null?null:v===0?0:(v>0?v+1:v-1);
+  const signed3=v=>v>0?'+'+v+' дн.':v+' дн.';
+  function metric3(){const card=document.querySelector('.kpi.fact');if(!card)return;const label=card.querySelector('.kpi-label');const value=card.querySelector('.kpi-value');const note=card.querySelector('.kpi-note');if(label)label.textContent='Выполнено работ по механике и электрике с 14.09.2026';if(value)value.textContent='8 из 20';if(note)note.textContent='по состоянию на 21.09.2026'}
+  function milestones3(base,current){const stages=[['МЕХАНИЧЕСКИЙ МОНТАЖ','Механический монтаж'],['ЭЛЕКТРИЧЕСКИЙ МОНТАЖ','Электрический монтаж'],['ИСПЫТАНИЯ И ПНР','Испытания и ПНР'],['ПЕРЕДАЧА','Передача']];const target=document.getElementById('milestones');if(target)target.innerHTML=stages.map(s=>{const a=last3(base,s[0]),b=last3(current,s[0]),d=inclusive3(shift3(a?.end,b?.end)),css=d===0?'delta-same':d>0?'delta-late':'delta-early',value=d===null?'Нет дат':d===0?'Без сдвига':signed3(d);return '<tr><td>'+s[1]+'</td><td class="date">'+text3(a?.end)+'</td><td class="date">'+text3(b?.end)+'</td><td class="numeric '+css+'">'+value+'</td></tr>'}).join('');const a=last3(base,'ПЕРЕДАЧА'),b=last3(current,'ПЕРЕДАЧА'),d=inclusive3(shift3(a?.end,b?.end));const finish=document.getElementById('finish-delta');if(finish)finish.textContent=d===null?'Нет дат':d===0?'Без сдвига':signed3(d)}
+  async function load3(){try{const values=await Promise.all([read3('base-schedule.xlsx'),read3('current-schedule.xlsx')]);const base=values[0],current=values[1];const draw=()=>{const baseTable=document.getElementById('base-table'),currentTable=document.getElementById('current-table');if(baseTable)baseTable.innerHTML=plan3(base);if(currentTable)currentTable.innerHTML=plan3(current);const baseCount=document.getElementById('base-count'),currentCount=document.getElementById('current-count');if(baseCount)baseCount.textContent=base.length+' строк';if(currentCount)currentCount.textContent=current.length+' строк';document.querySelector('.schedule-head.base p')?.replaceChildren('Полный график по КСГ от 29.07.2026.');document.querySelector('.schedule-head.current p')?.replaceChildren('Полный график по КСГ от 14.09.2026.');milestones3(base,current);metric3()};draw();let n=0;const repeat=setInterval(()=>{draw();if(++n===50)clearInterval(repeat)},250)}catch(e){}}
+  function boot3(){if(!window.XLSX){setTimeout(boot3,150);return}metric3();load3()}
+  if(document.readyState==='loading')window.addEventListener('DOMContentLoaded',boot3);else boot3();
+})();
+</script>
