@@ -671,3 +671,24 @@
   const refresh=setInterval(()=>{apply();if(++attempts===240)clearInterval(refresh);},250);
 })();
 </script>
+
+<script>
+(()=>{
+  let card=document.querySelector('.kpi.fact');
+  if(!card)return;
+  const fresh=card.cloneNode(true);
+  fresh.dataset.metricLock='true';
+  card.replaceWith(fresh);
+  card=fresh;
+  function enforce(){
+    const label=card.querySelector('.kpi-label');
+    const value=card.querySelector('.kpi-value');
+    const note=card.querySelector('.kpi-note');
+    if(label&&label.textContent!=='Выполнено работ по механике и электрике с 14.09.2026')label.textContent='Выполнено работ по механике и электрике с 14.09.2026';
+    if(value&&value.textContent!=='11 из 20')value.textContent='11 из 20';
+    if(note&&note.textContent!=='по состоянию на 24.09.2026')note.textContent='по состоянию на 24.09.2026';
+  }
+  new MutationObserver(enforce).observe(card,{childList:true,subtree:true,characterData:true});
+  enforce();
+})();
+</script>
