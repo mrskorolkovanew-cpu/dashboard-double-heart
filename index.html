@@ -692,3 +692,19 @@
   enforce();
 })();
 </script>
+
+<script>
+(() => {
+  const setText = (node, text) => { if (node && node.textContent !== text) node.textContent = text; };
+  const enforce = () => {
+    setText(document.querySelector('.asof'), 'Источники: КСГ 29.07.2026 · КСГ 14.09.2026 · ежедневный мониторинг 14–28.09.2026');
+    const card = document.querySelector('.kpi.fact');
+    if (!card) return;
+    setText(card.querySelector('.kpi-label'), 'Выполнено работ по механике и электрике с 14.09.2026');
+    setText(card.querySelector('.kpi-value'), '11 из 20');
+    setText(card.querySelector('.kpi-note'), 'по состоянию на 28.09.2026');
+  };
+  new MutationObserver(enforce).observe(document.body, { childList: true, subtree: true, characterData: true });
+  enforce();
+})();
+</script>
