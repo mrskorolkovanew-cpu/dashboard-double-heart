@@ -3,44 +3,40 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>P.SKAZKA — статус проекта</title>
+  <title>P.SKAZKA — статус проекта Double Heart</title>
   <style>
-    :root { --navy:#eef4ff; --blue:#78bdff; --blue-soft:#162f51; --ink:#e9eff9; --muted:#aebbd3; --line:rgba(222,232,255,.14); --bg:#08111f; --card:#101d32; --amber:#ffd182; --amber-soft:#302819; --red:#ff9b9b; --red-soft:#352027; --green:#7ee0a9; --green-soft:#17382b; --violet:#c9b5ff; --violet-soft:#292347; }
-    * { box-sizing:border-box; } html { scroll-behavior:smooth; }
+    :root { --navy:#eef4ff; --blue:#78bdff; --blue-soft:#162f51; --ink:#e9eff9; --muted:#aebbd3; --line:rgba(222,232,255,.14); --bg:#08111f; --card:#101d32; --amber:#ffd182; --amber-soft:#302819; --red:#ff9b9b; --red-soft:#352027; --green:#7ee0a9; --green-soft:#17382b; }
+    * { box-sizing:border-box; }
     body { margin:0; background:radial-gradient(900px 460px at 0 -10%,rgba(84,151,255,.16),transparent 58%),radial-gradient(760px 430px at 100% 0,rgba(146,104,239,.12),transparent 58%),var(--bg); color:var(--ink); font-family:Inter,"Segoe UI",Arial,sans-serif; }
     .wrap { max-width:1680px; margin:0 auto; padding:26px; }
     .topbar { display:flex; justify-content:space-between; gap:18px; align-items:flex-start; padding:2px 0 20px; }
     .brand { color:var(--navy); font-size:13px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+    .asof { color:var(--muted); font-size:13px; text-align:right; }
     .dashboard-tabs { display:flex; gap:8px; margin:0 0 20px; padding-bottom:12px; border-bottom:1px solid var(--line); }
     .tab-button { appearance:none; border:1px solid transparent; border-radius:8px; padding:9px 13px; background:transparent; color:var(--muted); font:inherit; font-size:13px; font-weight:800; cursor:pointer; }
-    .tab-button:hover { color:var(--navy); background:#14233b; }.tab-button[aria-selected="true"] { color:var(--navy); background:var(--blue-soft); border-color:#3b6595; }
+    .tab-button:hover { color:var(--navy); background:#14233b; }
+    .tab-button[aria-selected="true"] { color:var(--navy); background:var(--blue-soft); border-color:#3b6595; }
     .dashboard-view[hidden] { display:none; }
-    .asof { color:var(--muted); font-size:13px; text-align:right; }
-    .overview,.panel,.schedule-shell { background:var(--card); border:1px solid var(--line); border-radius:16px; }
+    .overview,.panel,.schedule-shell,.daily-shell { background:var(--card); border:1px solid var(--line); border-radius:16px; }
     .overview { padding:28px; box-shadow:0 12px 30px rgba(0,0,0,.18); }
     h1 { margin:0; color:var(--navy); font-size:clamp(30px,3vw,44px); letter-spacing:-.035em; line-height:1.06; }
     h2 { margin:0; color:var(--navy); font-size:22px; letter-spacing:-.02em; }
     h3 { margin:0; color:var(--navy); font-size:15px; }
     p { margin:0; }
-    .lead { margin-top:10px; max-width:820px; color:var(--muted); font-size:16px; line-height:1.55; }
-    .status-tag { display:inline-flex; margin-top:15px; padding:6px 9px; border-radius:7px; background:var(--red-soft); color:var(--red); font-size:12px; font-weight:800; }
     .kpi-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; margin-top:25px; }
     .kpi { min-height:126px; padding:16px; border:1px solid var(--line); border-radius:12px; background:#14223a; }
-    .kpi-label { color:var(--muted); font-size:11px; font-weight:800; letter-spacing:.075em; text-transform:uppercase; }
+    .kpi-label { color:var(--muted); font-size:11px; font-weight:800; letter-spacing:.075em; text-transform:uppercase; line-height:1.25; }
     .kpi-value { margin-top:10px; color:var(--navy); font-size:25px; font-weight:800; letter-spacing:-.025em; line-height:1.1; }
     .kpi-note { margin-top:6px; color:var(--muted); font-size:12px; line-height:1.35; }
     .kpi.alert { background:var(--red-soft); border-color:#744149; }.kpi.alert .kpi-value { color:var(--red); }
-    .kpi.fact { background:var(--green-soft); border-color:#c8ebd7; }.kpi.fact .kpi-value { color:var(--green); }
-    .kpi.wait { background:#142038; }
-    .management-note { display:flex; gap:12px; align-items:flex-start; margin-top:18px; padding:14px 16px; border-left:4px solid var(--amber); background:var(--amber-soft); color:#f2d9a4; font-size:14px; line-height:1.48; }
-    .management-note strong { color:#ffe0a4; }
+    .kpi.fact { background:var(--green-soft); border-color:#2c7350; }.kpi.fact .kpi-value { color:var(--green); }
+    .kpi.budget { background:var(--amber-soft); border-color:#6d5932; }.kpi.budget .kpi-value { font-size:20px; color:var(--amber); }
     .section { margin-top:24px; }
     .section-intro { display:flex; justify-content:space-between; gap:18px; align-items:end; margin-bottom:12px; }
     .section-intro p { max-width:650px; color:var(--muted); font-size:13px; line-height:1.45; text-align:right; }
-    .control-grid { display:grid; grid-template-columns:1.25fr .95fr; gap:16px; }
     .panel { padding:20px; }
     .panel-subtitle { margin-top:6px; color:var(--muted); font-size:13px; line-height:1.45; }
-    .table-wrap { overflow-x:auto; margin-top:14px; }
+    .table-wrap { overflow:auto; margin-top:14px; }
     table { width:100%; border-collapse:collapse; }
     th,td { padding:11px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
     th { color:var(--muted); font-size:10px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; white-space:nowrap; }
@@ -48,663 +44,148 @@
     tr:last-child td { border-bottom:none; }
     .numeric,.date { white-space:nowrap; font-variant-numeric:tabular-nums; }
     .delta-late { color:var(--red); font-weight:800; }.delta-early { color:var(--green); font-weight:800; }.delta-same { color:var(--muted); font-weight:700; }
-    .facts { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:9px; margin:15px 0; }
-    .fact-stat { padding:11px; border-radius:9px; background:#14233b; }.fact-number { display:block; color:var(--navy); font-size:21px; font-weight:800; }.fact-label { display:block; margin-top:3px; color:var(--muted); font-size:11px; line-height:1.2; }
-    .open-list,.decision-list { margin:12px 0 0; padding:0; list-style:none; }
-    .open-list li { display:flex; justify-content:space-between; gap:12px; padding:9px 0; border-bottom:1px solid var(--line); color:var(--ink); font-size:13px; line-height:1.35; }
-    .open-list li:last-child,.decision-list li:last-child { border-bottom:none; }.open-list time { flex:none; color:var(--amber); font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap; }
-    .decision-list li { display:grid; grid-template-columns:25px 1fr; gap:10px; padding:10px 0; border-bottom:1px solid var(--line); color:var(--ink); font-size:13px; line-height:1.42; }
-    .decision-number { display:grid; place-items:center; width:23px; height:23px; border-radius:50%; background:var(--blue-soft); color:var(--blue); font-size:12px; font-weight:800; }
-    .schedule-shell { padding:20px; }.schedule-area { padding:0; }.schedule-grid { display:grid; grid-template-columns:repeat(3,minmax(450px,1fr)); gap:14px; overflow-x:auto; padding-bottom:3px; }
-    .schedule { min-width:450px; border:1px solid var(--line); border-radius:11px; overflow:hidden; }.schedule-head { min-height:112px; padding:16px; border-bottom:1px solid var(--line); }.schedule-head.base { background:var(--blue-soft); }.schedule-head.current { background:var(--amber-soft); }.schedule-head.actual { background:var(--green-soft); }
-    .schedule-label { color:var(--muted); font-size:10px; font-weight:800; letter-spacing:.09em; text-transform:uppercase; }.schedule-head h3 { margin-top:5px; font-size:18px; }.schedule-head p { margin-top:5px; color:var(--muted); font-size:12px; line-height:1.4; }.schedule-count { margin-top:8px; color:var(--navy); font-size:12px; font-weight:800; }
-    .schedule .table-wrap { max-height:720px; margin:0; overflow:auto; }.schedule th { position:sticky; top:0; z-index:1; background:#14233b; }.work { min-width:230px; }.id { width:42px; color:var(--blue); font-weight:800; }.root td { background:#132641; color:var(--blue); font-weight:800; }.milestone td { background:#132137; font-weight:800; }
-    .badge { display:inline-block; padding:4px 6px; border-radius:5px; font-size:11px; font-weight:800; line-height:1.2; }.badge.late { color:var(--red); background:var(--red-soft); }.badge.early { color:var(--green); background:var(--green-soft); }.badge.same { color:var(--muted); background:#26344b; }.badge.new { color:var(--violet); background:var(--violet-soft); }.fact-date { color:var(--green); font-weight:800; white-space:nowrap; }.no-fact { color:#8c99aa; }
-    .loading,.error { padding:35px 16px; color:var(--muted); font-size:13px; text-align:center; }.error { color:var(--red); }.footnote { margin:14px 2px 0; color:var(--muted); font-size:12px; line-height:1.5; }
-    @media (max-width:1180px) { .kpi-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }.control-grid { grid-template-columns:1fr; } }
-    @media (max-width:720px) { .wrap { padding:15px; }.overview,.schedule-shell { padding:20px; }.topbar,.section-intro { display:block; }.asof,.section-intro p { margin-top:8px; text-align:left; }.kpi-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.kpi { min-height:110px; }.kpi-value { font-size:22px; }.facts { grid-template-columns:1fr; }.schedule-grid { grid-template-columns:1fr; overflow:visible; }.schedule { min-width:0; }.schedule .table-wrap { max-height:530px; } }
+    .completed-groups { display:grid; gap:16px; margin-top:15px; }
+    .completed-part,.monitor-part { display:flex; justify-content:space-between; gap:12px; padding:9px 10px; background:var(--green-soft); color:var(--green); font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; }
+    .completed-part span { color:var(--muted); font-size:10px; }
+    .completed-list { margin:0; padding:0; list-style:none; }
+    .completed-list li { display:grid; grid-template-columns:46px 1fr; gap:8px; padding:8px 2px; border-bottom:1px solid var(--line); font-size:12px; line-height:1.35; }
+    .completed-list li:last-child { border-bottom:0; }.completed-id { color:var(--green); font-weight:800; font-variant-numeric:tabular-nums; }
+    .schedule-shell,.daily-shell { padding:20px; }
+    .schedule-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+    .schedule { min-width:0; border:1px solid var(--line); border-radius:11px; overflow:hidden; }
+    .schedule-head { min-height:112px; padding:16px; border-bottom:1px solid var(--line); }.schedule-head.base { background:var(--blue-soft); }.schedule-head.current { background:var(--amber-soft); }
+    .schedule-head h3 { font-size:18px; }.schedule-head p { margin-top:5px; color:var(--muted); font-size:12px; line-height:1.4; }.schedule-count { margin-top:8px; color:var(--navy); font-size:12px; font-weight:800; }
+    .schedule .table-wrap { max-height:720px; margin:0; overflow:auto; }.schedule th { position:sticky; top:0; z-index:1; background:#14233b; }.work { min-width:300px; }.id { width:52px; color:var(--blue); font-weight:800; }.root td { background:#132641; color:var(--blue); font-weight:800; }.milestone td { background:#132137; font-weight:800; }
+    .loading,.error { padding:35px 16px; color:var(--muted); font-size:13px; text-align:center; }.error { color:var(--red); }
+    .daily-toolbar { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:12px; }.daily-toolbar p { color:var(--muted); font-size:13px; }.daily-toolbar a { color:var(--blue); font-size:13px; font-weight:800; text-decoration:none; }.daily-toolbar a:hover { text-decoration:underline; }
+    .daily-frame { height:calc(100vh - 190px); min-height:820px; overflow:hidden; border:1px solid rgba(222,232,255,.18); border-radius:10px; background:#fff; }.daily-frame iframe { display:block; width:100%; height:100%; border:0; background:#fff; }
+    @media (max-width:1180px) { .kpi-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+    @media (max-width:720px) { .wrap { padding:15px; }.overview,.schedule-shell,.daily-shell { padding:20px; }.topbar,.section-intro,.daily-toolbar { display:block; }.asof,.section-intro p { margin-top:8px; text-align:left; }.daily-toolbar a { display:inline-block; margin-top:8px; }.kpi-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.kpi { min-height:110px; }.kpi-value { font-size:22px; }.schedule-grid { grid-template-columns:1fr; }.schedule .table-wrap { max-height:530px; }.daily-frame { height:760px; min-height:0; } }
   </style>
 </head>
 <body>
   <main class="wrap">
-    <header class="topbar"><div class="brand">P.SKAZKA · Double Heart</div><div class="asof">Источники: КСГ 29.07.2026 · КСГ 14.09.2026 · ежедневный мониторинг 14–21.09.2026</div></header>
+    <header class="topbar"><div class="brand">P.SKAZKA · Double Heart</div><div class="asof">Источники: КСГ 29.07.2026 · КСГ 14.09.2026 · ежедневный мониторинг 14–28.09.2026</div></header>
     <nav class="dashboard-tabs" role="tablist" aria-label="Разделы дашборда">
       <button class="tab-button" id="summary-tab" type="button" role="tab" aria-selected="true" aria-controls="summary-view" data-view="summary-view">Сводка</button>
       <button class="tab-button" id="schedules-tab" type="button" role="tab" aria-selected="false" aria-controls="schedules-view" data-view="schedules-view">Графики</button>
+      <button class="tab-button" id="daily-tab" type="button" role="tab" aria-selected="false" aria-controls="daily-view" data-view="daily-view">Ежедневный мониторинг</button>
     </nav>
-    <div id="summary-view" class="dashboard-view" role="tabpanel" aria-labelledby="summary-tab">
-    <section class="overview" aria-labelledby="page-title">
-      <h1 id="page-title">Статус проекта</h1>
-      <p class="lead">Управленческая сводка по базовому и текущему графикам. Фактические даты показаны только там, где они прямо зафиксированы в ежедневном мониторинге.</p>
-      <span class="status-tag">Внимание: текущая плановая дата завершения позже базовой</span>
-      <div class="kpi-grid" aria-label="Ключевые показатели проекта">
-        <article class="kpi"><div class="kpi-label">Базовая дата</div><div id="base-finish" class="kpi-value">—</div><div class="kpi-note">по КСГ от 29.07.2026</div></article>
-        <article class="kpi"><div class="kpi-label">Текущая плановая дата</div><div id="current-finish" class="kpi-value">—</div><div class="kpi-note">по актуальному КСГ</div></article>
-        <article class="kpi alert"><div class="kpi-label">Общее отклонение</div><div id="finish-delta" class="kpi-value">—</div><div class="kpi-note">по сроку передачи</div></article>
-        <article class="kpi fact"><div class="kpi-label">Ежедневный мониторинг</div><div id="fact-progress" class="kpi-value">—</div><div class="kpi-note">работ с фактом окончания</div></article>
-        <article class="kpi wait"><div class="kpi-label">Бюджет: план / факт</div><div class="kpi-value">Нет данных</div><div class="kpi-note">ожидается отдельная выгрузка освоения</div></article>
-      </div>
-      <div class="management-note"><strong>Главное для решения.</strong><span>Сдвиг отражает изменение плановой версии графика, а не автоматически подтверждённое фактическое отставание. Требуется подтвердить основание переноса и актуальный прогноз завершения.</span></div>
-    </section>
 
-    <section class="section" aria-labelledby="milestones-title">
-      <div class="section-intro"><div><h2 id="milestones-title">Отклонения по этапам</h2></div><p>Только основные синие вехи КСГ. Положительное значение — перенос позднее базового срока.</p></div>
-      <div class="control-grid">
-        <article class="panel"><h3>Сроки основных этапов</h3><div class="table-wrap"><table><thead><tr><th>Этап</th><th>Базовый срок</th><th>Текущий срок</th><th>Отклонение</th></tr></thead><tbody id="milestones"><tr><td colspan="4" class="loading">Загрузка этапов…</td></tr></tbody></table></div></article>
-        <article class="panel">
-          <h3>Факт в ежедневном мониторинге</h3><p class="panel-subtitle">Счётчики отражают только прямые записи в предоставленном файле, без расчёта или допущений.</p>
-          <div class="facts"><div class="fact-stat"><span id="completed-count" class="fact-number">—</span><span class="fact-label">завершено</span></div><div class="fact-stat"><span id="ongoing-count" class="fact-number">—</span><span class="fact-label">начато, без даты окончания</span></div><div class="fact-stat"><span id="no-fact-count" class="fact-number">—</span><span class="fact-label">без зафиксированных дат</span></div></div>
-          <h3>Начаты, но окончание не внесено</h3><ul id="ongoing-list" class="open-list"><li><span>Загрузка фактических данных…</span></li></ul>
-        </article>
-      </div>
-    </section>
+    <section id="summary-view" class="dashboard-view" role="tabpanel" aria-labelledby="summary-tab">
+      <section class="overview" aria-labelledby="page-title">
+        <h1 id="page-title">Статус проекта Double Heart</h1>
+        <div class="kpi-grid" aria-label="Ключевые показатели проекта">
+          <article class="kpi"><div class="kpi-label">Дата Zamperla от 29.07.26</div><div class="kpi-value">31.10.2026</div><div class="kpi-note">по КСГ от 29.07.26</div></article>
+          <article class="kpi"><div class="kpi-label">Предлагаемая новая дата Zamperla от 14.09.26</div><div class="kpi-value">14.12.2026</div><div class="kpi-note">по КСГ от 14.09.26</div></article>
+          <article class="kpi alert"><div class="kpi-label">Общее отклонение</div><div class="kpi-value">+45 дн.</div><div class="kpi-note">по сроку передачи</div></article>
+          <article class="kpi fact"><div class="kpi-label">Выполнено работ по механике и электрике с 14.09.2026</div><div class="kpi-value">11 из 20</div><div class="kpi-note">по состоянию на 28.09.2026</div></article>
+          <article class="kpi budget"><div class="kpi-label">Бюджет: план / факт</div><div class="kpi-value">1 093 763 938 ₽ /<br>941 994 432,52 ₽</div><div class="kpi-note">Затраты актуализируются совместно с Департаментом экономики и финансов ООО «Парк Сказка». Данные будут обновлены и подтверждены.</div></article>
+        </div>
+      </section>
 
-    <section class="section" aria-labelledby="decisions-title">
-      <div class="section-intro"><div><h2 id="decisions-title">Требуемые управленческие действия</h2></div><p>Это не выводы о виновных или факте задержки — только вопросы, которые данные ещё не закрывают.</p></div>
-      <article class="panel"><ol class="decision-list"><li><span class="decision-number">1</span><span><strong>Подтвердить актуальный прогноз.</strong> Текущий КСГ переносит передачу относительно базовой версии; необходимо подтвердить основание переноса и решение по сроку.</span></li><li><span class="decision-number">2</span><span><strong>Закрыть факт по начатым работам.</strong> Для работ с фактическим началом, но без даты окончания требуется внести статус и прогноз завершения в ежедневный мониторинг.</span></li><li><span class="decision-number">3</span><span><strong>Добавить освоение бюджета.</strong> Для раздела план/факт нужны исходные данные по бюджету; без них финансовые показатели на странице не рассчитываются.</span></li></ol></article>
-    </section>
+      <section class="section" aria-labelledby="milestones-title">
+        <div class="section-intro"><div><h2 id="milestones-title">Отклонения по этапам</h2></div></div>
+        <article class="panel"><h3>Сроки основных этапов</h3><div class="table-wrap"><table><thead><tr><th>Этап</th><th>по КСГ от 29.07.26</th><th>по КСГ от 14.09.26</th><th>Отклонение</th></tr></thead><tbody>
+          <tr><td>Механический монтаж</td><td class="date">04.09.2026</td><td class="date">05.10.2026</td><td class="numeric delta-late">+32 дн.</td></tr>
+          <tr><td>Электрический монтаж</td><td class="date">12.09.2026</td><td class="date">24.10.2026</td><td class="numeric delta-late">+43 дн.</td></tr>
+          <tr><td>Испытания и ПНР</td><td class="date">31.10.2026</td><td class="date">14.12.2026</td><td class="numeric delta-late">+45 дн.</td></tr>
+          <tr><td>Передача</td><td class="date">31.10.2026</td><td class="date">14.12.2026</td><td class="numeric delta-late">+45 дн.</td></tr>
+        </tbody></table></div></article>
+      </section>
 
-    </div>
+      <section class="section" aria-labelledby="completed-title">
+        <div class="section-intro"><div><h2 id="completed-title">Фактически выполненные работы по механике и электрике на текущую дату</h2></div></div>
+        <article class="panel"><p class="panel-subtitle">Выполнено 11 из 20 работ. Включены только пронумерованные строки с зелёной заливкой в ежедневном мониторинге.</p><div class="completed-groups">
+          <section><div class="completed-part">Механическая часть <span>2 работы</span></div><ul class="completed-list"><li><span class="completed-id">1.1</span><span>Регулировка фланцев трэков для обеспечения соосности со стрелкой техобслуживания</span></li><li><span class="completed-id">1.2</span><span>Регулировка стрелки техобслуживания для обеспечения соосности с треками</span></li></ul></section>
+          <section><div class="completed-part">Электрическая часть <span>9 работ</span></div><ul class="completed-list"><li><span class="completed-id">2.1</span><span>Установка шкафов в техпомещении</span></li><li><span class="completed-id">2.2</span><span>Монтаж кабельных лотков над шкафами в тех. помещении</span></li><li><span class="completed-id">2.3</span><span>Прокладка кабеля датчиков температуры</span></li><li><span class="completed-id">2.4</span><span>Прокладка кабеля питания вентиляторов</span></li><li><span class="completed-id">2.5</span><span>Поставка и монтаж кронштейнов для корпусов DAP2A и DAP2B.</span></li><li><span class="completed-id">2.6</span><span>Монтаж уличных шкафов</span></li><li><span class="completed-id">2.7.1</span><span>Подключение верхней зоны</span></li><li><span class="completed-id">2.7.2</span><span>подключение зоны переключателя</span></li><li><span class="completed-id">2.7.3</span><span>Подключение зоны технического обслуживания</span></li></ul></section>
+        </div></article>
+      </section>
+
+      <section class="section" aria-labelledby="monitor-title">
+        <div class="section-intro"><div><h2 id="monitor-title">Отклонение промежуточных сроков по итогам ежедневного мониторинга</h2></div></div>
+        <article class="panel"><div class="table-wrap"><table><thead><tr><th>Работа</th><th>Плановое окончание</th><th>Итог ежедневного мониторинга</th><th>Отклонение</th></tr></thead><tbody>
+          <tr><td class="monitor-part" colspan="4">Механическая часть</td></tr>
+          <tr><td>Регулировка треков зоны техобслуживания</td><td class="date">22.09.2026</td><td>Планируемый срок завершения — 24.09.26</td><td class="delta-late">+2 дн.</td></tr>
+          <tr><td class="monitor-part" colspan="4">Электрическая часть</td></tr>
+          <tr><td>Установка шкафов в техпомещении</td><td class="date">13.09.2026</td><td>Завершено — 19.09.26</td><td class="delta-late">+6 дн.</td></tr>
+          <tr><td>Монтаж кабельных лотков над шкафами в тех. помещении</td><td class="date">15.09.2026</td><td>Ожидаемый срок завершения — 23–24.09.26</td><td class="delta-late">+8–9 дн.</td></tr>
+          <tr><td>Подключение зоны технического обслуживания</td><td class="date">20.09.2026</td><td>Ожидаемый срок завершения — 25.09.26</td><td class="delta-late">+5 дн.</td></tr>
+        </tbody></table></div></article>
+      </section>
+    </section>
 
     <section id="schedules-view" class="dashboard-view schedule-shell" role="tabpanel" aria-labelledby="schedules-tab" hidden>
-      <div class="section-intro"><div><h2>Детальные графики</h2></div><p>Базовый и текущий КСГ, а также ежедневный мониторинг фактических дат.</p></div>
-      <div class="schedule-area"><div class="schedule-grid" aria-label="Полные источники графика">
-        <article class="schedule"><header class="schedule-head base"><div class="schedule-label">Исходная версия</div><h3>Базовый график</h3><p>КСГ от 29.07.2026: механический монтаж и последующие работы.</p><div id="base-count" class="schedule-count">Загрузка…</div></header><div id="base-table" class="table-wrap"><div class="loading">Загрузка базового графика…</div></div></article>
-        <article class="schedule"><header class="schedule-head current"><div class="schedule-label">Актуальная версия</div><h3>Текущий график</h3><p>КСГ от 14.09.2026: механический монтаж и последующие работы.</p><div id="current-count" class="schedule-count">Загрузка…</div></header><div id="current-table" class="table-wrap"><div class="loading">Загрузка текущего графика…</div></div></article>
-        <article class="schedule"><header class="schedule-head actual"><div class="schedule-label">Только факт</div><h3>Ежедневный мониторинг</h3><p>Работы и фактические даты начала/окончания. Плановые даты не показаны.</p><div id="actual-count" class="schedule-count">20 строк</div></header><div id="actual-table" class="table-wrap"></div></article>
-      </div></div>
-    <p class="footnote">«Добавлено / изменено» означает, что в базовом КСГ нет точного совпадения по наименованию. Это не является автоматическим подтверждением новой работы: возможны переименование или изменение структуры графика.</p>
+      <div class="section-intro"><div><h2>Детальные графики</h2></div></div>
+      <div class="schedule-grid" aria-label="Полные графики">
+        <article class="schedule"><header class="schedule-head base"><h3>Дата Zamperla от 29.07.26</h3><p>Полный график по КСГ от 29.07.2026.</p><div id="base-count" class="schedule-count">Загрузка…</div></header><div id="base-table" class="table-wrap"><div class="loading">Откройте вкладку «Графики», чтобы загрузить полный КСГ.</div></div></article>
+        <article class="schedule"><header class="schedule-head current"><h3>Предлагаемая новая дата Zamperla от 14.09.26</h3><p>Полный график по КСГ от 14.09.2026.</p><div id="current-count" class="schedule-count">Загрузка…</div></header><div id="current-table" class="table-wrap"><div class="loading">Откройте вкладку «Графики», чтобы загрузить полный КСГ.</div></div></article>
+      </div>
+    </section>
+
+    <section id="daily-view" class="dashboard-view daily-shell" role="tabpanel" aria-labelledby="daily-tab" hidden>
+      <div class="daily-toolbar"><p>Ежедневный мониторинг показан в исходном виде.</p><a href="daily-monitoring.xlsx" target="_blank" rel="noopener">Открыть исходный Excel</a></div>
+      <div id="daily-host"><div class="loading">Откройте вкладку «Ежедневный мониторинг», чтобы загрузить исходный файл.</div></div>
     </section>
   </main>
 
   <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script defer>
-    const actualRows = [
-      ['1.1','Регулировка фланцев трассы для совмещения с переключателем','—','—'],
-      ['1.2','Регулировка переключателя обслуживания','09.09.2026','16.09.2026'],
-      ['1.3','Регулировка трассы в зоне обслуживания','16.09.2026','—'],
-      ['1.4','Заливка раствора под фланцы колонн и трасс зоны обслуживания','—','—'],
-      ['1.5','Выдержка безусадочного раствора','—','—'],
-      ['1.6','Монтаж пневматической системы','—','—'],
-      ['1.7','Затяжка соединений переключателя и колонн зоны обслуживания','—','—'],
-      ['1.8','Монтаж тележек','—','—'],
-      ['2.1','Установка электрических шкафов в техпомещении','—','—'],
-      ['2.2','Установка кабельных лотков над шкафами','18.09.2026','19.09.2026'],
-      ['2.3','Прокладка кабелей температурных датчиков','11.09.2026','—'],
-      ['2.4','Прокладка силовых кабелей вентиляторов','17.09.2026','—'],
-      ['2.5','Поставка и монтаж опор шкафов DAP2A / DAP2B','14.09.2026','—'],
-      ['2.6','Монтаж наружных электрических шкафов','17.09.2026','—'],
-      ['2.7','Подключение и маркировка кабелей','—','—'],
-      ['2.7.1','Подключение верхней зоны','—','—'],
-      ['2.7.2','Подключение зоны переключателя','16.09.2026','16.09.2026'],
-      ['2.7.3','Подключение зоны обслуживания','16.09.2026','—'],
-      ['2.7.4','Подключение полевого шкафа','—','—'],
-      ['2.7.5','Подключение шкафа внутри помещения','—','—']
-    ];
-    const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-    const norm = value => String(value ?? '').toLowerCase().replace(/ё/g,'е').replace(/[^а-яa-z0-9]+/gi,' ').trim();
-    const asDate = value => {
-      if (!value) return null;
-      if (value instanceof Date && !Number.isNaN(value.getTime())) return value;
-      if (typeof value === 'number') { const parsed = XLSX.SSF.parse_date_code(value); return parsed ? new Date(parsed.y,parsed.m-1,parsed.d) : null; }
-      const parsed = new Date(value); return Number.isNaN(parsed.getTime()) ? null : parsed;
-    };
-    const dateText = value => { const date=asDate(value); return date ? date.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric'}) : '—'; };
-    const shiftDays = (from,to) => { const a=asDate(from),b=asDate(to); return a && b ? Math.round((b-a)/86400000) : null; };
-    const signed = value => `${value > 0 ? '+' : ''}${value} дн.`;
-    const taskClass = row => {
-      if (Number(row.id) === 4) return 'root';
-      if (String(row.duration ?? '').trim().startsWith('0')) return 'milestone';
-      const letters=String(row.name ?? '').replace(/[^а-яёa-z]/gi,'');
-      return letters && letters === letters.toUpperCase() ? 'milestone' : '';
-    };
-    const lastByName = (rows,name) => rows.filter(row => norm(row.name) === norm(name)).slice(-1)[0];
-
-    async function readSchedule(path) {
-      const response = await fetch(path);
-      if (!response.ok) throw new Error(`Не удалось загрузить ${path}`);
-      const bytes = await response.arrayBuffer();
-      const book = XLSX.read(bytes,{type:'array',cellDates:true});
-      const sheet = book.Sheets[book.SheetNames[0]];
-      const sourceRows=XLSX.utils.sheet_to_json(sheet,{header:1,raw:true,defval:null});
-      const header=sourceRows[0] || [];
-      const startColumn=header.findIndex(value => norm(value) === 'начало');
-      const endColumn=header.findIndex(value => norm(value) === 'окончание');
-      const durationColumn=header.findIndex(value => norm(value) === 'длительность');
-      const rows = sourceRows.slice(1)
-        .filter(row => row[0] !== null && row[1])
-        .map(row => ({
-          id:row[0],
-          name:row[1],
-          duration:durationColumn >= 0 ? row[durationColumn] : null,
-          start:row[startColumn >= 0 ? startColumn : 3],
-          end:row[endColumn >= 0 ? endColumn : 4]
-        }));
-      const mechanicalStart = rows.findIndex(row => norm(row.name) === norm('МЕХАНИЧЕСКИЙ МОНТАЖ'));
-      return mechanicalStart >= 0 ? rows.slice(mechanicalStart) : rows;
-    }
-
-    function planTable(rows) {
-      return `<table><thead><tr><th>ID</th><th>Работа</th><th>Начало</th><th>Окончание</th></tr></thead><tbody>${rows.map(row => `<tr class="${taskClass(row)}"><td class="id">${esc(row.id)}</td><td class="work">${esc(row.name)}</td><td class="date">${dateText(row.start)}</td><td class="date">${dateText(row.end)}</td></tr>`).join('')}</tbody></table>`;
-    }
-    function deviation(base,row) {
-      if (!base) return '<span class="badge new">Добавлено / изменено</span>';
-      const start=shiftDays(base.start,row.start), end=shiftDays(base.end,row.end);
-      if (start === null && end === null) return '<span class="badge same">Нет дат</span>';
-      if (start === 0 && end === 0) return '<span class="badge same">Без сдвига</span>';
-      const value=[start !== null ? `нач. ${signed(start)}` : '',end !== null ? `кон. ${signed(end)}` : ''].filter(Boolean).join('<br>');
-      return `<span class="badge ${(end ?? start) > 0 ? 'late' : 'early'}">${value}</span>`;
-    }
-    function currentTable(rows,baseline) {
-      const pool=new Map();
-      baseline.forEach(row => { const key=norm(row.name); const list=pool.get(key)||[]; list.push(row); pool.set(key,list); });
-      return `<table><thead><tr><th>ID</th><th>Работа</th><th>Начало</th><th>Окончание</th><th>Отклонение</th></tr></thead><tbody>${rows.map(row => { const list=pool.get(norm(row.name)); const base=list && list.length ? list.shift() : null; return `<tr class="${taskClass(row)}"><td class="id">${esc(row.id)}</td><td class="work">${esc(row.name)}</td><td class="date">${dateText(row.start)}</td><td class="date">${dateText(row.end)}</td><td>${deviation(base,row)}</td></tr>`; }).join('')}</tbody></table>`;
-    }
-    function actualTable(rows) {
-      return `<table><thead><tr><th>№</th><th>Работа</th><th>Факт начала</th><th>Факт окончания</th></tr></thead><tbody>${rows.map(row => `<tr><td class="id">${esc(row[0])}</td><td class="work">${esc(row[1])}</td><td class="${row[2] === '—' ? 'no-fact' : 'fact-date'}">${esc(row[2])}</td><td class="${row[3] === '—' ? 'no-fact' : 'fact-date'}">${esc(row[3])}</td></tr>`).join('')}</tbody></table>`;
-    }
-    function renderFactSummary() {
-      const completed=actualRows.filter(row => row[3] !== '—');
-      const ongoing=actualRows.filter(row => row[2] !== '—' && row[3] === '—');
-      const empty=actualRows.filter(row => row[2] === '—' && row[3] === '—');
-      document.getElementById('completed-count').textContent=completed.length;
-      document.getElementById('ongoing-count').textContent=ongoing.length;
-      document.getElementById('no-fact-count').textContent=empty.length;
-      document.getElementById('fact-progress').textContent=`${completed.length} из ${actualRows.length}`;
-      document.getElementById('ongoing-list').innerHTML=ongoing.map(row => `<li><span>${esc(row[1])}</span><time>${esc(row[2])}</time></li>`).join('');
-    }
-    function renderMilestones(base,current) {
-      const stages=[
-        {key:'МЕХАНИЧЕСКИЙ МОНТАЖ',label:'Механический монтаж'},
-        {key:'ЭЛЕКТРИЧЕСКИЙ МОНТАЖ',label:'Электрический монтаж'},
-        {key:'ИСПЫТАНИЯ И ПНР',label:'Испытания и ПНР'},
-        {key:'ПЕРЕДАЧА',label:'Передача'}
-      ];
-      document.getElementById('milestones').innerHTML=stages.map(stage => {
-        const baseRow=lastByName(base,stage.key), currentRow=lastByName(current,stage.key), delta=shiftDays(baseRow?.end,currentRow?.end);
-        const css=delta === 0 ? 'delta-same' : delta > 0 ? 'delta-late' : 'delta-early';
-        const value=delta === null ? 'Нет дат' : delta === 0 ? 'Без сдвига' : signed(delta);
-        return `<tr><td>${esc(stage.label)}</td><td class="date">${dateText(baseRow?.end)}</td><td class="date">${dateText(currentRow?.end)}</td><td class="numeric ${css}">${value}</td></tr>`;
-      }).join('');
-      const baseFinish=lastByName(base,'ПЕРЕДАЧА'),currentFinish=lastByName(current,'ПЕРЕДАЧА'),delta=shiftDays(baseFinish?.end,currentFinish?.end);
-      document.getElementById('base-finish').textContent=dateText(baseFinish?.end);
-      document.getElementById('current-finish').textContent=dateText(currentFinish?.end);
-      document.getElementById('finish-delta').textContent=delta === null ? 'Нет дат' : signed(delta);
-    }
-    async function render() {
-      document.getElementById('actual-table').innerHTML=actualTable(actualRows);
-      renderFactSummary();
-      try {
-        const [base,current]=await Promise.all([readSchedule('base-schedule.xlsx'),readSchedule('current-schedule.xlsx')]);
-        document.getElementById('base-table').innerHTML=planTable(base);
-        document.getElementById('current-table').innerHTML=currentTable(current,base);
-        document.getElementById('base-count').textContent=`${base.length} строк`;
-        document.getElementById('current-count').textContent=`${current.length} строк`;
-        renderMilestones(base,current);
-      } catch (error) {
-        const message='<div class="error">График не удалось загрузить. Проверьте наличие исходных файлов в репозитории.</div>';
-        document.getElementById('base-table').innerHTML=message;
-        document.getElementById('current-table').innerHTML=message;
-        document.getElementById('milestones').innerHTML='<tr><td colspan="4" class="error">Контрольные точки не загружены.</td></tr>';
+    (() => {
+      const normalize = value => String(value ?? '').toLowerCase().replace(/ё/g, 'е').replace(/[^а-яa-z0-9]+/gi, ' ').trim();
+      const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[char]));
+      const asDate = value => {
+        if (value instanceof Date && !Number.isNaN(value.getTime())) return value;
+        if (typeof value === 'number' && window.XLSX) { const item = XLSX.SSF.parse_date_code(value); return item ? new Date(item.y, item.m - 1, item.d) : null; }
+        const parsed = new Date(value);
+        return Number.isNaN(parsed.getTime()) ? null : parsed;
+      };
+      const dateText = value => { const date = asDate(value); return date ? date.toLocaleDateString('ru-RU', { day:'2-digit', month:'2-digit', year:'numeric' }) : '—'; };
+      const taskClass = row => { if (Number(row.id) === 4) return 'root'; if (String(row.duration ?? '').trim().startsWith('0')) return 'milestone'; const letters = String(row.name ?? '').replace(/[^а-яёa-z]/gi, ''); return letters && letters === letters.toUpperCase() ? 'milestone' : ''; };
+      const scheduleTable = rows => `<table><thead><tr><th>ID</th><th>Работа</th><th>Начало</th><th>Окончание</th></tr></thead><tbody>${rows.map(row => `<tr class="${taskClass(row)}"><td class="id">${escapeHtml(row.id)}</td><td class="work">${escapeHtml(row.name)}</td><td class="date">${dateText(row.start)}</td><td class="date">${dateText(row.end)}</td></tr>`).join('')}</tbody></table>`;
+      async function readSchedule(path) {
+        const response = await fetch(path, { cache:'no-store' });
+        if (!response.ok) throw new Error(`Не удалось загрузить ${path}`);
+        const workbook = XLSX.read(await response.arrayBuffer(), { type:'array', cellDates:true });
+        const source = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], { header:1, raw:true, defval:null });
+        const headerIndex = source.findIndex(row => row.some(value => normalize(value) === 'начало') && row.some(value => normalize(value) === 'окончание'));
+        const header = source[headerIndex >= 0 ? headerIndex : 0] || [];
+        const startColumn = header.findIndex(value => normalize(value) === 'начало');
+        const endColumn = header.findIndex(value => normalize(value) === 'окончание');
+        const durationColumn = header.findIndex(value => normalize(value) === 'длительность');
+        return source.slice((headerIndex >= 0 ? headerIndex : 0) + 1).filter(row => row[0] !== null && row[1]).map(row => ({ id:row[0], name:row[1], duration:durationColumn >= 0 ? row[durationColumn] : null, start:row[startColumn >= 0 ? startColumn : 3], end:row[endColumn >= 0 ? endColumn : 4] }));
       }
-    }
-    function setActiveView(viewId) {
-      document.querySelectorAll('.tab-button').forEach(button => {
-        const active=button.dataset.view === viewId;
-        button.setAttribute('aria-selected',String(active));
-        document.getElementById(button.dataset.view).hidden=!active;
-      });
-    }
-    function setupTabs() {
-      document.querySelectorAll('.tab-button').forEach(button => button.addEventListener('click',() => setActiveView(button.dataset.view)));
-    }
-    window.addEventListener('DOMContentLoaded',() => { setupTabs(); render(); });
+      let schedulesLoaded = false;
+      async function loadSchedules() {
+        if (schedulesLoaded) return;
+        schedulesLoaded = true;
+        try {
+          const [base, current] = await Promise.all([readSchedule('base-schedule.xlsx'), readSchedule('current-schedule.xlsx')]);
+          document.getElementById('base-table').innerHTML = scheduleTable(base);
+          document.getElementById('current-table').innerHTML = scheduleTable(current);
+          document.getElementById('base-count').textContent = `${base.length} строк`;
+          document.getElementById('current-count').textContent = `${current.length} строк`;
+        } catch (error) {
+          const message = '<div class="error">Не удалось загрузить исходный КСГ.</div>';
+          document.getElementById('base-table').innerHTML = message;
+          document.getElementById('current-table').innerHTML = message;
+        }
+      }
+      let dailyLoaded = false;
+      function loadDailyMonitor() {
+        if (dailyLoaded) return;
+        dailyLoaded = true;
+        const source = 'https://mrskorolkovanew-cpu.github.io/dashboard-double-heart/daily-monitoring.xlsx';
+        const viewer = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(source)}`;
+        document.getElementById('daily-host').innerHTML = `<div class="daily-frame"><iframe title="Ежедневный мониторинг — исходная таблица Excel" src="${viewer}"></iframe></div>`;
+      }
+      function activate(viewId) {
+        document.querySelectorAll('.tab-button').forEach(button => { const active = button.dataset.view === viewId; button.setAttribute('aria-selected', String(active)); document.getElementById(button.dataset.view).hidden = !active; });
+        if (viewId === 'schedules-view') loadSchedules();
+        if (viewId === 'daily-view') loadDailyMonitor();
+      }
+      document.querySelectorAll('.tab-button').forEach(button => button.addEventListener('click', () => activate(button.dataset.view)));
+    })();
   </script>
-<script>(()=>{const n=['Регулировка фланцев трэков для обеспечения соосности со стрелкой техобслуживания','Регулировка стрелки техобслуживания для обеспечения соосности с треками','Регулировка треков зоны техобслуживания','Подливка фланцев колонн зоны стрелки техобслуживания и треков зоны техобслуживания','Твердение безусадочного раствора','Монтаж пневмосистемы','Протяжка фланцев колонн зоны стрелки техобслуживания и трэков зоны техобслуживания','Установка тележек','Установка шкафов в техпомещении','Монтаж кабельных лотков над шкафами в тех. помещении','Прокладка кабеля датчиков температуры','Прокладка кабеля питания вентиляторов','Поставка и монтаж кронштейнов для корпусов DAP2A и DAP2B.','Монтаж уличных шкафов','Подключение и маркировка:','Подключение верхней зоны','подключение зоны переключателя','подключение зоны технического обслуживания','подключение к полевой распределительной коробке','подключение шкафов внутри помещения'];function a(){actualRows.forEach((r,i)=>r[1]=n[i]);renderFactSummary();const l=document.querySelectorAll('.kpi-grid .kpi .kpi-label');if(l[0])l[0].textContent='Дата Zamperla от 29.07.26';if(l[1])l[1].textContent='Предлагаемая новая дата Zamperla от 14.09.26';const b=document.querySelector('.schedule-head.base h3'),c=document.querySelector('.schedule-head.current h3');if(b)b.textContent='Дата Zamperla от 29.07.26';if(c)c.textContent='Предлагаемая новая дата Zamperla от 14.09.26';const m=document.getElementById('actual-table');if(m)m.innerHTML='<table><thead><tr><th>№</th><th>Работа</th><th>Факт начала</th><th>Факт окончания</th></tr></thead><tbody>'+actualRows.map(r=>{const g=r[0]==='1.1'?'Механическая часть':r[0]==='2.1'?'Электрическая часть':'';return(g?'<tr class="actual-section"><th colspan="4">'+g+'</th></tr>':'')+'<tr><td class="id">'+r[0]+'</td><td class="work">'+r[1]+'</td><td class="'+(r[2]==='—'?'no-fact':'fact-date')+'">'+r[2]+'</td><td class="'+(r[3]==='—'?'no-fact':'fact-date')+'">'+r[3]+'</td></tr>'}).join('')+'</tbody></table>';const t=document.querySelector('#current-table table');if(t)t.querySelectorAll('tr').forEach(r=>{if(r.children.length>4)r.lastElementChild.remove()});document.querySelectorAll('.schedule-shell .footnote').forEach(x=>x.remove())}const s=document.createElement('style');s.textContent='.actual-section th{padding:10px;background:#17382b;color:#7ee0a9;border-bottom:1px solid #2c7350;font-size:11px;text-align:left;}';document.head.append(s);function g(){a();let i=0,z=setInterval(()=>{a();if(++i===20)clearInterval(z)},200)}document.readyState==='loading'?window.addEventListener('DOMContentLoaded',g):g()})()</script><script>(()=>{const E=v=>String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\x22/g,"&quot;").replace(/\x27/g,"&#39;");const F=v=>{if(v instanceof Date)return v.toLocaleDateString("ru-RU",{day:"2-digit",month:"2-digit",year:"numeric"});if(typeof v==="number"){const q=XLSX.SSF.parse_date_code(v);return q?`${String(q.d).padStart(2,"0")}.${String(q.m).padStart(2,"0")}.${q.y}`:String(v)}return v??""};const G=r=>["1.","2."].includes(String(r[0]??""))?"monitor-section":(!r[0]&&r[3]?"monitor-note":(!r[0]&&(r[4]||r[11])?"monitor-change":""));const nav=document.querySelector(".dashboard-tabs");if(!document.getElementById("daily-tab")){nav.insertAdjacentHTML("beforeend",`<button class="tab-button" id="daily-tab" type="button" role="tab" aria-selected="false" aria-controls="daily-view" data-view="daily-view">Ежедневный мониторинг</button>`);const v=document.createElement("section");v.id="daily-view";v.className="dashboard-view schedule-shell";v.hidden=true;v.setAttribute("role","tabpanel");v.setAttribute("aria-labelledby","daily-tab");v.innerHTML=`<div class="section-intro"><div><h2>Ежедневный мониторинг</h2></div><p>Источник: утвержденный план работ до ПНР по механике и электрике.</p></div><div class="daily-layout"><article class="panel daily-plan"><h3>Утвержденный план работ до ПНР по механике и электрике</h3><div id="daily-plan-table" class="table-wrap"><div class="loading">Загрузка утвержденного плана…</div></div></article><article class="panel daily-full"><h3>Итоги ежедневного мониторинга утвержденного плана работ до ПНР по механике и электрике</h3><div id="daily-full-table" class="table-wrap"><div class="loading">Загрузка итогов мониторинга…</div></div></article></div>`;document.querySelector("main.wrap").append(v)}document.querySelectorAll(".management-note,.schedule-shell .footnote").forEach(x=>x.remove());const css=document.createElement("style");css.textContent=`.daily-layout{display:grid;grid-template-columns:minmax(420px,.78fr) minmax(760px,1.72fr);gap:14px}.daily-layout .table-wrap{max-height:720px;overflow:auto}.daily-full table{min-width:2500px}.daily-full th{position:sticky;top:0;z-index:1;background:#14233b}.daily-full td{white-space:pre-line}.monitor-section td{background:#17382b;color:#7ee0a9;font-weight:800}.monitor-note td{background:#14233b;color:#dbe6f7}.monitor-change td{background:#302819;color:#ffd182;font-weight:800}@media(max-width:1180px){.daily-layout{grid-template-columns:1fr}}`;document.head.append(css);function S(){const summary=document.getElementById("summary-view");if(document.getElementById("monitor-deviations"))return;const s=document.createElement("section");s.id="monitor-deviations";s.className="section";s.innerHTML=`<div class="section-intro"><div><h2>Отклонение промежуточных сроков по итогам ежедневного мониторинга</h2></div><p>Показаны работы, по которым в мониторинге указан явный прогноз или дата завершения.</p></div><article class="panel"><div class="table-wrap"><table><thead><tr><th>Работа</th><th>Плановое окончание</th><th>Итог мониторинга</th><th>Отклонение</th></tr></thead><tbody id="daily-deviations"><tr><td colspan="4" class="loading">Загрузка отклонений…</td></tr></tbody></table></div></article>`;const d=summary.querySelector("[aria-labelledby=decisions-title]");d?d.before(s):summary.append(s)}async function L(){try{const r=await fetch("daily-monitoring.xlsx");if(!r.ok)throw new Error();const b=XLSX.read(await r.arrayBuffer(),{type:"array",cellDates:true});const rows=XLSX.utils.sheet_to_json(b.Sheets[b.SheetNames[0]],{header:1,raw:true,defval:null});const plan=rows.slice(2,28).filter(x=>x[0]||x[3]||x[4]||x[11]);const all=rows.slice(2).filter(x=>x.some(v=>v!==null&&v!==""));const cell=v=>E(F(v)||"—");document.getElementById("daily-plan-table").innerHTML=`<table><thead><tr><th>№</th><th>Наименование работ</th><th>Плановое начало</th><th>Плановое окончание</th></tr></thead><tbody>${plan.map(x=>`<tr class="${G(x)}"><td class="id">${cell(x[0])}</td><td class="work">${cell(x[3])}</td><td class="date">${cell(x[4])}</td><td class="date">${cell(x[11])}</td></tr>`).join("")}</tbody></table>`;const days=["14.09","15.09","16.09","17.09","18.09","21.09"];document.getElementById("daily-full-table").innerHTML=`<table><thead><tr><th rowspan="2">№</th><th rowspan="2">Name of the work (English)</th><th rowspan="2">Nome delle opere (Italiano)</th><th rowspan="2">Наименование работ</th><th rowspan="2">Плановое начало</th><th colspan="6">Начало — статус по состоянию на</th><th rowspan="2">Плановое окончание</th><th colspan="6">Завершение — статус по состоянию на</th></tr><tr>${days.map(x=>`<th>${x}</th>`).join("")}${days.map(x=>`<th>${x}</th>`).join("")}</tr></thead><tbody>${all.map(x=>`<tr class="${G(x)}">${x.map(cell).map(v=>`<td>${v}</td>`).join("")}</tr>`).join("")}</tbody></table>`;const by=id=>rows.find(x=>String(x[0]??"")===id);const dev=[["1.3","Планируемый срок завершения — 24.09.26","+2 дн."],["2.1","Завершено — 19.09.26","+6 дн."],["2.2","Ожидаемый срок завершения — 23–24.09.26","+8–9 дн."],["2.7.3","Ожидаемый срок завершения — 25.09.26","+5 дн."]];document.getElementById("daily-deviations").innerHTML=dev.map(x=>{const q=by(x[0])||[];return `<tr><td>${cell(q[3])}</td><td class="date">${cell(q[11])}</td><td>${E(x[1])}</td><td class="delta-late">${E(x[2])}</td></tr>`}).join("")}catch(e){const m=`<div class="error">Не удалось загрузить файл ежедневного мониторинга.</div>`;document.getElementById("daily-plan-table").innerHTML=m;document.getElementById("daily-full-table").innerHTML=m;const d=document.getElementById("daily-deviations");if(d)d.innerHTML=`<tr><td colspan="4" class="error">Отклонения не загружены.</td></tr>`}}function start(){S();L()}document.readyState==="loading"?window.addEventListener("DOMContentLoaded",start):start()})();</script></body>
+</body>
 </html>
-<script>
-(()=>{
-  const daily=[
-    ['1.1','Регулировка фланцев трэков для обеспечения соосности со стрелкой техобслуживания','—','—'],
-    ['1.2','Регулировка стрелки техобслуживания для обеспечения соосности с треками','09.09.2026','16.09.2026'],
-    ['1.3','Регулировка треков зоны техобслуживания','16.09.2026','—'],
-    ['1.4','Подливка фланцев колонн зоны стрелки техобслуживания и треков зоны техобслуживания','—','—'],
-    ['1.5','Твердение безусадочного раствора','—','—'],
-    ['1.6','Монтаж пневмосистемы','—','—'],
-    ['1.7','Протяжка фланцев колонн зоны стрелки техобслуживания и трэков зоны техобслуживания','—','—'],
-    ['1.8','Установка тележек','—','—'],
-    ['2.1','Установка шкафов в техпомещении','—','—'],
-    ['2.2','Монтаж кабельных лотков над шкафами в тех. помещении','18.09.2026','19.09.2026'],
-    ['2.3','Прокладка кабеля датчиков температуры','11.09.2026','—'],
-    ['2.4','Прокладка кабеля питания вентиляторов','17.09.2026','—'],
-    ['2.5','Поставка и монтаж кронштейнов для корпусов DAP2A и DAP2B.','14.09.2026','—'],
-    ['2.6','Монтаж уличных шкафов','17.09.2026','—'],
-    ['2.7','Подключение и маркировка:','—','—'],
-    ['2.7.1','Подключение верхней зоны','—','—'],
-    ['2.7.2','подключение зоны переключателя','16.09.2026','16.09.2026'],
-    ['2.7.3','подключение зоны технического обслуживания','16.09.2026','—'],
-    ['2.7.4','подключение к полевой распределительной коробке','—','—'],
-    ['2.7.5','подключение шкафов внутри помещения','—','—']
-  ];
-  function apply(){
-    const labels=document.querySelectorAll('.kpi-grid .kpi .kpi-label');
-    if(labels[0]) labels[0].textContent='Дата Zamperla от 29.07.26';
-    if(labels[1]) labels[1].textContent='Предлагаемая новая дата Zamperla от 14.09.26';
-    const base=document.querySelector('.schedule-head.base h3');
-    const current=document.querySelector('.schedule-head.current h3');
-    if(base) base.textContent='Дата Zamperla от 29.07.26';
-    if(current) current.textContent='Предлагаемая новая дата Zamperla от 14.09.26';
-    const actual=document.getElementById('actual-table');
-    if(actual){
-      actual.innerHTML='<table><thead><tr><th>№</th><th>Работа</th><th>Факт начала</th><th>Факт окончания</th></tr></thead><tbody>'+daily.map(function(r){const group=r[0]==='1.1'?'Механическая часть':r[0]==='2.1'?'Электрическая часть':'';return (group?'<tr class="actual-section"><th colspan="4">'+group+'</th></tr>':'')+'<tr><td class="id">'+r[0]+'</td><td class="work">'+r[1]+'</td><td class="'+(r[2]==='—'?'no-fact':'fact-date')+'">'+r[2]+'</td><td class="'+(r[3]==='—'?'no-fact':'fact-date')+'">'+r[3]+'</td></tr>';}).join('')+'</tbody></table>';
-    }
-    const table=document.querySelector('#current-table table');
-    if(table) table.querySelectorAll('tr').forEach(function(row){if(row.children.length>4) row.lastElementChild.remove();});
-    document.querySelectorAll('.schedule-shell .footnote').forEach(function(node){node.remove();});
-  }
-  const style=document.createElement('style');
-  style.textContent='.actual-section th{padding:10px;background:#17382b;color:#7ee0a9;border-bottom:1px solid #2c7350;font-size:11px;text-align:left;}';
-  document.head.appendChild(style);
-  function start(){apply();let attempts=0;const timer=setInterval(function(){apply();if(++attempts===20)clearInterval(timer);},200);}
-  if(document.readyState==='loading') window.addEventListener('DOMContentLoaded',start); else start();
-})();
-</script>
-
-<script>
-(()=>{
-  const esc2=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-  const format2=v=>{if(v instanceof Date)return v.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric'});if(typeof v==='number'){const d=XLSX.SSF.parse_date_code(v);return d?String(d.d).padStart(2,'0')+'.'+String(d.m).padStart(2,'0')+'.'+d.y:String(v)}return v??''};
-  const cell2=v=>esc2(format2(v)||'—');
-  const class2=r=>['1.','2.'].includes(String(r[0]??''))?'monitor-section':'';
-  const part2=id=>String(id).startsWith('1.')?'Механическая':'Электрическая';
-  const pair2=(start,finish)=>'<div class="daily-pair"><small>Начало</small><br>'+cell2(start)+'<br><small>Окончание</small><br>'+cell2(finish)+'</div>';
-  function draw2(rows){
-    const numbered=rows.slice(2).filter(r=>String(r[0]??'').trim()!=='');
-    const plan=document.getElementById('daily-plan-table');
-    const full=document.getElementById('daily-full-table');
-    if(plan)plan.innerHTML='<table class="monitor-plan"><thead><tr><th>№</th><th>Наименование работ</th><th>Плановое начало</th><th>Плановое окончание</th></tr></thead><tbody>'+numbered.map(r=>'<tr class="'+class2(r)+'"><td class="id">'+cell2(r[0])+'</td><td class="work">'+cell2(r[3])+'</td><td class="date">'+cell2(r[4])+'</td><td class="date">'+cell2(r[11])+'</td></tr>').join('')+'</tbody></table>';
-    const days=['14.09','15.09','16.09','17.09','18.09','21.09'];
-    if(full)full.innerHTML='<table class="monitor-compact"><thead><tr><th>№</th><th>Наименование работ</th><th>План</th>'+days.map(d=>'<th class="daily-day">'+d+'<br><span>начало / окончание</span></th>').join('')+'</tr></thead><tbody>'+numbered.map(r=>'<tr class="'+class2(r)+'"><td class="id">'+cell2(r[0])+'</td><td class="work">'+cell2(r[3])+'</td><td class="daily-status">'+pair2(r[4],r[11])+'</td>'+days.map((d,i)=>'<td class="daily-status">'+pair2(r[5+i],r[12+i])+'</td>').join('')+'</tr>').join('')+'</tbody></table>';
-    const by=id=>rows.find(r=>String(r[0]??'')===id)||[];
-    const deviations=[['1.3','Планируемый срок завершения — 24.09.26','+2 дн.'],['2.1','Завершено — 19.09.26','+6 дн.'],['2.2','Ожидаемый срок завершения — 23–24.09.26','+8–9 дн.'],['2.7.3','Ожидаемый срок завершения — 25.09.26','+5 дн.']];
-    const deviationTable=document.getElementById('daily-deviations')?.closest('table');
-    if(deviationTable)deviationTable.innerHTML='<thead><tr><th>Часть</th><th>Работа</th><th>Плановое окончание</th><th>Итог мониторинга</th><th>Отклонение</th></tr></thead><tbody>'+deviations.map(d=>{const r=by(d[0]);return '<tr><td class="monitor-part">'+part2(d[0])+'</td><td>'+cell2(r[3])+'</td><td class="date">'+cell2(r[11])+'</td><td>'+esc2(d[1])+'</td><td class="delta-late">'+esc2(d[2])+'</td></tr>';}).join('')+'</tbody>';
-  }
-  async function load2(){
-    try{const response=await fetch('daily-monitoring.xlsx');if(!response.ok)throw new Error();const book=XLSX.read(await response.arrayBuffer(),{type:'array',cellDates:true});const rows=XLSX.utils.sheet_to_json(book.Sheets[book.SheetNames[0]],{header:1,raw:true,defval:null});draw2(rows);let attempts=0;const repeat=setInterval(()=>{draw2(rows);if(++attempts===8)clearInterval(repeat)},500);}catch(e){}}
-  const style=document.createElement('style');
-  style.textContent='.daily-full .monitor-compact{min-width:0!important;width:100%;table-layout:fixed}.daily-full .monitor-compact th{white-space:normal;line-height:1.3}.daily-full .monitor-compact th:first-child{width:42px}.daily-full .monitor-compact th:nth-child(2){width:250px}.daily-full .monitor-compact th:nth-child(3){width:112px}.daily-full .daily-status{min-width:0;white-space:normal;word-break:break-word;font-size:11px;line-height:1.35}.daily-full .daily-pair small{color:#aebbd3;font-size:9px;font-weight:800;text-transform:uppercase}.daily-full .daily-day span{color:#aebbd3;font-size:9px;letter-spacing:0;text-transform:none}.monitor-plan{min-width:0!important}.monitor-part{color:#7ee0a9;font-weight:800;white-space:nowrap}';
-  document.head.append(style);
-  function start2(){if(window.XLSX&&document.getElementById('daily-full-table'))load2();else setTimeout(start2,150);}
-  if(document.readyState==='loading')window.addEventListener('DOMContentLoaded',start2);else start2();
-})();
-</script>
-<script>
-(()=>{
-  function budget(){
-    const card=document.querySelector('.kpi.wait');
-    if(!card)return;
-    card.innerHTML='<div class="kpi-label">Бюджет: план / факт</div><div class="budget-value"><span>План</span> 1 093 763 938 ₽<br><span>Факт</span> 941 994 432,52 ₽</div><div class="kpi-note">На текущий момент идет процесс актуализации затрат совместно с Департаментом экономики и финансов ООО «Парк Сказка». Данные будут обновлены и подтверждены.</div>';
-  }
-  const style=document.createElement('style');
-  style.textContent='.kpi.wait{background:#142038}.budget-value{margin-top:8px;color:var(--navy);font-size:16px;font-weight:800;line-height:1.42;letter-spacing:-.015em}.budget-value span{display:inline-block;min-width:43px;color:var(--muted);font-size:10px;letter-spacing:.06em;text-transform:uppercase}.kpi.wait .kpi-note{font-size:10px;line-height:1.32}';
-  document.head.append(style);
-  if(document.readyState==='loading')window.addEventListener('DOMContentLoaded',budget);else budget();
-})();
-</script>
-<script>(()=>{const item=document.querySelectorAll('.decision-list li')[2]?.querySelector('span:last-child');if(item)item.innerHTML='<strong>Актуализировать и подтвердить затраты.</strong> Текущие значения внесены в дашборд и проходят совместную актуализацию с Департаментом экономики и финансов ООО «Парк Сказка».';})();</script>
-<script>(()=>{const E=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'),F=v=>v instanceof Date?v.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric'}):v??'';async function R(){try{const q=await fetch('daily-monitoring.xlsx'),b=XLSX.read(await q.arrayBuffer(),{type:'array',cellDates:true}),a=XLSX.utils.sheet_to_json(b.Sheets[b.SheetNames[0]],{header:1,raw:true,defval:null,blankrows:true}),v=document.getElementById('daily-view');v.innerHTML='<div class=section-intro><div><h2>Ежедневный мониторинг</h2></div></div><div class=raw-monitor><table><tbody>'+a.map((r,i)=>'<tr class=r'+(i+1)+'>'+Array.from({length:18},(_,j)=>'<td>'+E(F(r[j]))+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>'}catch(e){}}function G(){window.XLSX&&document.getElementById('daily-view')?R():setTimeout(G,100)}const s=document.createElement('style');s.textContent='.raw-monitor{overflow:auto;background:#fff}.raw-monitor table{width:auto!important;min-width:3400px!important;border-collapse:collapse!important;background:#fff!important;color:#000!important;font:11pt Calibri,Arial,sans-serif}.raw-monitor td{padding:2px 4px!important;border:1px solid #000!important;background:#fff!important;color:#000!important;vertical-align:top!important;white-space:pre-wrap!important;overflow-wrap:anywhere;text-transform:none!important;letter-spacing:0!important;line-height:1.15!important}.raw-monitor .r2 td,.raw-monitor .r3 td,.raw-monitor .r4 td{font-weight:700;text-align:center}.raw-monitor td:nth-child(1){width:7ch}.raw-monitor td:nth-child(2){width:61ch}.raw-monitor td:nth-child(3){width:1ch}.raw-monitor td:nth-child(4){width:51ch}.raw-monitor td:nth-child(n+5){width:20ch}';document.head.append(s);G()})();</script>
-
-<script>
-(()=>{
-  const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-  const text=v=>{if(v instanceof Date)return v.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric'});if(typeof v==='number'){const d=XLSX.SSF.parse_date_code(v);return d?String(d.d).padStart(2,'0')+'.'+String(d.m).padStart(2,'0')+'.'+d.y:String(v)}return v??''};
-  async function draw(){try{const r=await fetch('daily-monitoring.xlsx'),b=XLSX.read(await r.arrayBuffer(),{type:'array',cellDates:true}),s=b.Sheets[b.SheetNames[0]],rows=XLSX.utils.sheet_to_json(s,{header:1,raw:true,defval:null,blankrows:true}),v=document.getElementById('daily-view');if(v)v.innerHTML='<div class="raw-monitor"><table><tbody>'+rows.map((row,i)=>'<tr class="source-row-'+(i+1)+'">'+Array.from({length:18},(_,j)=>'<td>'+esc(text(row[j]))+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>'}catch(_){}}
-  function start(){if(!window.XLSX||!document.getElementById('daily-view')){setTimeout(start,200);return}let n=0;const loop=()=>{draw();if(++n<24)setTimeout(loop,500)};loop()}
-  const style=document.createElement('style');
-  style.textContent='.raw-monitor{overflow:auto;background:#fff}.raw-monitor table{width:auto!important;min-width:3400px!important;border-collapse:collapse!important;background:#fff!important;color:#000!important;font:11pt Calibri,Arial,sans-serif}.raw-monitor td{padding:2px 4px!important;border:1px solid #000!important;background:#fff!important;color:#000!important;vertical-align:top!important;white-space:pre-wrap!important;overflow-wrap:anywhere;text-transform:none!important;letter-spacing:0!important;line-height:1.15!important}.raw-monitor .source-row-2 td,.raw-monitor .source-row-3 td,.raw-monitor .source-row-4 td{font-weight:700;text-align:center}.raw-monitor td:nth-child(1){width:7ch}.raw-monitor td:nth-child(2){width:61ch}.raw-monitor td:nth-child(3){width:1ch}.raw-monitor td:nth-child(4){width:51ch}.raw-monitor td:nth-child(n+5){width:20ch}';
-  document.head.append(style);
-  if(document.readyState==='loading')window.addEventListener('DOMContentLoaded',start);else start();
-})();
-</script>
-
-<script>
-(()=>{
-  const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  function restore(){const row=document.querySelector('#daily-view .raw-monitor tbody tr:first-child');if(!row||row.cells.length!==18)return;const title=row.cells[0].textContent;row.innerHTML='<td colspan="12" style="text-align:center;font-weight:700">'+esc(title)+'</td>'+Array.from({length:6},()=>'<td></td>').join('');}
-  let n=0;const loop=()=>{restore();if(++n<50)setTimeout(loop,250)};loop();
-})();
-</script>
-
-
-<script>
-(()=>{
-  const dailyView=document.getElementById('daily-view');
-  if(!dailyView)return;
-  const sourceFile='https://mrskorolkovanew-cpu.github.io/dashboard-double-heart/daily-monitoring.xlsx';
-  const viewer='https://view.officeapps.live.com/op/embed.aspx?src='+encodeURIComponent(sourceFile);
-  const style=document.createElement('style');
-  style.textContent='.native-monitor-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 12px;color:var(--navy);font-size:15px;font-weight:800}.native-monitor-toolbar a{color:var(--blue);font-size:13px;text-decoration:none;white-space:nowrap}.native-monitor-toolbar a:hover{text-decoration:underline}.native-monitor-frame{height:calc(100vh - 190px);min-height:820px;overflow:hidden;border:1px solid rgba(222,232,255,.18);border-radius:10px;background:#fff}.native-monitor-frame iframe{display:block;width:100%;height:100%;border:0;background:#fff}@media(max-width:720px){.native-monitor-toolbar{align-items:flex-start;flex-direction:column}.native-monitor-frame{height:760px;min-height:0}}';
-  document.head.appendChild(style);
-  const observer=new MutationObserver(()=>{if(!dailyView.querySelector('iframe[data-native-daily]'))render();});
-  function render(){
-    observer.disconnect();
-    dailyView.innerHTML='<div class="native-monitor-toolbar"><span>Ежедневный мониторинг — исходный файл</span><a href="daily-monitoring.xlsx" target="_blank" rel="noopener">Открыть исходный Excel</a></div><div class="native-monitor-frame"><iframe data-native-daily title="Ежедневный мониторинг — исходная таблица Excel" src="'+viewer+'"></iframe></div>';
-    observer.observe(dailyView,{childList:true,subtree:true});
-  }
-  render();
-})();
-</script>
-
-
-<script>
-(()=>{
-  const rows=[
-    ['Механическая часть','Регулировка треков зоны техобслуживания','22.09.2026','Планируемый срок завершения — 24.09.26','+2 дн.'],
-    ['Электрическая часть','Установка шкафов в техпомещении','13.09.2026','Завершено — 19.09.26','+6 дн.'],
-    ['Электрическая часть','Монтаж кабельных лотков над шкафами в тех. помещении','15.09.2026','Ожидаемый срок завершения — 23–24.09.26','+8–9 дн.'],
-    ['Электрическая часть','Подключение зоны технического обслуживания','20.09.2026','Ожидаемый срок завершения — 25.09.26','+5 дн.']
-  ];
-  const esc=v=>String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  function render(){
-    document.querySelector('.schedule-head.actual')?.closest('.schedule')?.remove();
-    const scheduleText=document.querySelector('#schedules-view .section-intro p');
-    if(scheduleText)scheduleText.textContent='Базовый и текущий КСГ.';
-    const section=document.getElementById('monitor-deviations');
-    if(!section)return;
-    const intro=section.querySelector('.section-intro p');
-    if(intro)intro.textContent='Показаны только работы с явно указанным результатом или прогнозом в ежедневном мониторинге.';
-    const table=section.querySelector('table');
-    if(!table)return;
-    let part='';
-    table.innerHTML='<thead><tr><th>Работа</th><th>Плановое окончание</th><th>Итог ежедневного мониторинга</th><th>Отклонение</th></tr></thead><tbody>'+rows.map(r=>{const heading=r[0]!==part?(part=r[0],'<tr class="monitor-part-row"><td colspan="4">'+esc(part)+'</td></tr>'):'';return heading+'<tr><td>'+esc(r[1])+'</td><td class="date">'+esc(r[2])+'</td><td>'+esc(r[3])+'</td><td class="delta-late">'+esc(r[4])+'</td></tr>';}).join('')+'</tbody>';
-  }
-  const style=document.createElement('style');
-  style.textContent='.monitor-part-row td{padding:10px!important;background:#17382b!important;color:#7ee0a9!important;font-size:11px!important;font-weight:800!important;letter-spacing:.08em;text-transform:uppercase}.monitor-part-row+tr td{border-top:0}';
-  document.head.appendChild(style);
-  render();
-  let attempt=0;const refresh=setInterval(()=>{render();if(++attempt===12)clearInterval(refresh);},250);
-})();
-</script>
-
-<script>
-(()=>{
-  function update(){
-    const card=document.querySelector('.kpi.fact');
-    if(!card)return;
-    const label=card.querySelector('.kpi-label');
-    const value=card.querySelector('.kpi-value');
-    const note=card.querySelector('.kpi-note');
-    if(label)label.textContent='Выполнено задач';
-    if(value)value.textContent='8 из 20';
-    if(note)note.textContent='по состоянию на 21.09.2026';
-  }
-  update();
-  let n=0;const timer=setInterval(()=>{update();if(++n===12)clearInterval(timer);},250);
-})();
-</script>
-
-<script>
-(()=>{
-  const card=document.querySelector('.kpi.fact');
-  if(!card)return;
-  function apply(){
-    const label=card.querySelector('.kpi-label');
-    const value=card.querySelector('.kpi-value');
-    const note=card.querySelector('.kpi-note');
-    if(label&&label.textContent!=='Выполнено задач')label.textContent='Выполнено задач';
-    if(value&&value.textContent!=='8 из 20')value.textContent='8 из 20';
-    if(note&&note.textContent!=='по состоянию на 21.09.2026')note.textContent='по состоянию на 21.09.2026';
-  }
-  apply();
-  new MutationObserver(apply).observe(card,{childList:true,subtree:true,characterData:true});
-})();
-</script>
-
-<script>
-(()=>{
-  if(document.getElementById('actual-table'))return;
-  const hiddenTable=document.createElement('div');
-  hiddenTable.id='actual-table';
-  hiddenTable.hidden=true;
-  hiddenTable.setAttribute('aria-hidden','true');
-  document.body.appendChild(hiddenTable);
-})();
-</script>
-
-<script>
-(()=>{
-  const currentNote=document.querySelector('.kpi-grid .kpi:nth-child(2) .kpi-note');
-  if(currentNote)currentNote.textContent='по КСГ от 14.09.26';
-  const milestonesNote=document.querySelector('#summary-view .section[aria-labelledby="milestones-title"] .section-intro p');
-  if(milestonesNote)milestonesNote.remove();
-})();
-</script>
-
-<script>
-(()=>{
-  const headers=document.querySelector('#milestones')?.closest('table')?.querySelectorAll('thead th');
-  if(headers?.[1])headers[1].textContent='по КСГ от 29.07.26';
-  if(headers?.[2])headers[2].textContent='по КСГ от 14.09.26';
-})();
-</script>
-
-
-<script>
-(()=>{
-  const completed={
-    mechanical:[['1.2','Регулировка стрелки техобслуживания для обеспечения соосности с треками']],
-    electrical:[['2.1','Установка шкафов в техпомещении'],['2.2','Монтаж кабельных лотков над шкафами в тех. помещении'],['2.3','Прокладка кабеля датчиков температуры'],['2.4','Прокладка кабеля питания вентиляторов'],['2.5','Поставка и монтаж кронштейнов для корпусов DAP2A и DAP2B'],['2.6','Монтаж уличных шкафов'],['2.7.2','Подключение зоны переключателя']]
-  };
-  const escapeHtml=value=>String(value).replace(/[&<>]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[char]));
-  const makeList=rows=>'<ul class=completed-list>'+rows.map(row=>'<li><span class=completed-id>'+escapeHtml(row[0])+'</span><span>'+escapeHtml(row[1])+'</span></li>').join('')+'</ul>';
-  function apply(){
-    const summary=document.getElementById('summary-view');
-    if(!summary)return;
-    summary.querySelector('[aria-labelledby=decisions-title]')?.remove();
-    const oldTitle=[...summary.querySelectorAll('h3')].find(node=>node.textContent.trim()==='Факт в ежедневном мониторинге');
-    const oldPanel=oldTitle?.closest('article.panel');
-    if(!oldPanel||oldPanel.dataset.completedWorks==='true')return;
-    const panel=document.createElement('article');
-    panel.className='panel completed-work-panel';
-    panel.dataset.completedWorks='true';
-    panel.innerHTML='<h3>Фактически выполненные работы по механике и электрике на текущую дату</h3><p class=panel-subtitle>Выполнено 8 из 20 работ.</p><div class=completed-groups><section><div class=completed-part>Механическая часть <span>1 работа</span></div>'+makeList(completed.mechanical)+'</section><section><div class=completed-part>Электрическая часть <span>7 работ</span></div>'+makeList(completed.electrical)+'</section></div><div hidden aria-hidden=true><span id=completed-count></span><span id=ongoing-count></span><span id=no-fact-count></span><ul id=ongoing-list></ul></div>';
-    oldPanel.replaceWith(panel);
-  }
-  const style=document.createElement('style');
-  style.textContent='.completed-work-panel{min-width:0}.completed-groups{margin-top:14px;display:grid;gap:12px}.completed-part{padding:8px 10px;background:#17382b;color:#7ee0a9;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}.completed-part span{float:right;color:#aebbd3;font-size:10px}.completed-list{margin:0;padding:0;list-style:none}.completed-list li{display:grid;grid-template-columns:44px 1fr;gap:8px;padding:7px 2px;border-bottom:1px solid var(--line);font-size:12px;line-height:1.35}.completed-list li:last-child{border-bottom:none}.completed-id{color:var(--green);font-weight:800;font-variant-numeric:tabular-nums}';
-  document.head.appendChild(style);
-  apply();
-  let attempts=0;const refresh=setInterval(()=>{apply();if(++attempts===30)clearInterval(refresh);},250);
-})();
-</script>
-
-<script>
-(()=>{
-  const completed={
-    mechanical:[
-      ['1.1','Регулировка фланцев трэков для обеспечения соосности со стрелкой техобслуживания'],
-      ['1.2','Регулировка стрелки техобслуживания для обеспечения соосности с треками']
-    ],
-    electrical:[
-      ['2.1','Установка шкафов в техпомещении'],
-      ['2.3','Прокладка кабеля датчиков температуры'],
-      ['2.5','Поставка и монтаж кронштейнов для корпусов DAP2A и DAP2B.'],
-      ['2.6','Монтаж уличных шкафов'],
-      ['2.7.1','Подключение верхней зоны'],
-      ['2.7.2','подключение зоны переключателя']
-    ]
-  };
-  const esc=v=>String(v).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
-  const list=items=>'<ul class="completed-list">'+items.map(item=>'<li><span class="completed-id">'+esc(item[0])+'</span><span>'+esc(item[1])+'</span></li>').join('')+'</ul>';
-  function renderPanel(){
-    const old=document.querySelector('.completed-work-panel');
-    if(!old)return;
-    const panel=document.createElement('article');
-    panel.className='panel completed-work-panel';
-    panel.dataset.completedWorks='green-fill';
-    panel.innerHTML='<h3>Фактически выполненные работы по механике и электрике на текущую дату</h3><p class="panel-subtitle">Выполнено 8 из 20 работ.</p><div class="completed-groups"><section><div class="completed-part">Механическая часть <span>2 работы</span></div>'+list(completed.mechanical)+'</section><section><div class="completed-part">Электрическая часть <span>6 работ</span></div>'+list(completed.electrical)+'</section></div><div hidden aria-hidden="true"><span id="completed-count"></span><span id="ongoing-count"></span><span id="no-fact-count"></span><ul id="ongoing-list"></ul></div>';
-    old.replaceWith(panel);
-  }
-  function replaceMetric(){
-    const old=document.querySelector('.kpi.fact');
-    if(!old||old.dataset.greenMetric==='true')return;
-    const card=old.cloneNode(true);
-    card.dataset.greenMetric='true';
-    old.replaceWith(card);
-  }
-  function setMetric(){
-    const card=document.querySelector('.kpi.fact[data-green-metric="true"]');
-    if(!card)return;
-    const label=card.querySelector('.kpi-label');
-    const value=card.querySelector('.kpi-value');
-    const note=card.querySelector('.kpi-note');
-    if(label)label.textContent='Выполнено работ по механике и электрике';
-    if(value)value.textContent='8 из 20';
-    if(note)note.textContent='по состоянию на 21.09.2026';
-  }
-  const style=document.createElement('style');
-  style.textContent='.kpi.fact .kpi-label{font-size:10px;letter-spacing:.035em;line-height:1.22}';
-  document.head.appendChild(style);
-  renderPanel();
-  replaceMetric();
-  setMetric();
-  let attempts=0;
-  const refresh=setInterval(()=>{setMetric();if(++attempts===40)clearInterval(refresh);},200);
-})();
-</script>
-
-
-<script>
-(()=>{
-  const title=document.getElementById('page-title');
-  if(title) title.textContent='Статус проекта Double Heart';
-  document.querySelector('#summary-view .overview .lead')?.remove();
-  document.querySelector('#summary-view .overview .status-tag')?.remove();
-  document.querySelector('#schedules-view .section-intro p')?.remove();
-  document.querySelectorAll('#schedules-view .schedule-label').forEach(node=>node.remove());
-  const style=document.createElement('style');
-  style.textContent='#schedules-view .schedule-grid{grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}#schedules-view .schedule{min-width:0}#schedules-view .schedule .work{min-width:300px}@media(max-width:720px){#schedules-view .schedule-grid{grid-template-columns:1fr}}';
-  document.head.appendChild(style);
-})();
-</script>
-
-<script>
-(()=>{
-  const norm3=v=>String(v??'').toLowerCase().replace(/ё/g,'е').replace(/[^а-яa-z0-9]+/gi,' ').trim();
-  const esc3=v=>String(v??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
-  const date3=v=>{if(!v)return null;if(v instanceof Date)return v;if(typeof v==='number'){const q=XLSX.SSF.parse_date_code(v);return q?new Date(q.y,q.m-1,q.d):null}const q=new Date(v);return Number.isNaN(q.getTime())?null:q};
-  const text3=v=>{const d=date3(v);return d?d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric'}):'—'};
-  const class3=r=>{if(Number(r.id)===4)return 'root';if(String(r.duration??'').trim().startsWith('0'))return 'milestone';const s=String(r.name??'').replace(/[^а-яёa-z]/gi,'');return s&&s===s.toUpperCase()?'milestone':''};
-  async function read3(path){const response=await fetch(path);if(!response.ok)throw new Error(path);const book=XLSX.read(await response.arrayBuffer(),{type:'array',cellDates:true});const sourceRows=XLSX.utils.sheet_to_json(book.Sheets[book.SheetNames[0]],{header:1,raw:true,defval:null});const header=sourceRows[0]||[];const start=header.findIndex(v=>norm3(v)==='начало');const end=header.findIndex(v=>norm3(v)==='окончание');const duration=header.findIndex(v=>norm3(v)==='длительность');return sourceRows.slice(1).filter(r=>r[0]!==null&&r[1]).map(r=>({id:r[0],name:r[1],duration:duration>=0?r[duration]:null,start:r[start>=0?start:3],end:r[end>=0?end:4]}));}
-  function plan3(rows){return '<table><thead><tr><th>ID</th><th>Работа</th><th>Начало</th><th>Окончание</th></tr></thead><tbody>'+rows.map(r=>'<tr class="'+class3(r)+'"><td class="id">'+esc3(r.id)+'</td><td class="work">'+esc3(r.name)+'</td><td class="date">'+text3(r.start)+'</td><td class="date">'+text3(r.end)+'</td></tr>').join('')+'</tbody></table>'}
-  const last3=(rows,key)=>rows.filter(r=>norm3(r.name)===norm3(key)).slice(-1)[0];
-  const shift3=(a,b)=>{const x=date3(a),y=date3(b);return x&&y?Math.round((y-x)/86400000):null};
-  const inclusive3=v=>v===null?null:v===0?0:(v>0?v+1:v-1);
-  const signed3=v=>v>0?'+'+v+' дн.':v+' дн.';
-  function metric3(){const card=document.querySelector('.kpi.fact');if(!card)return;const label=card.querySelector('.kpi-label');const value=card.querySelector('.kpi-value');const note=card.querySelector('.kpi-note');if(label)label.textContent='Выполнено работ по механике и электрике с 14.09.2026';if(value)value.textContent='8 из 20';if(note)note.textContent='по состоянию на 21.09.2026'}
-  function milestones3(base,current){const stages=[['МЕХАНИЧЕСКИЙ МОНТАЖ','Механический монтаж'],['ЭЛЕКТРИЧЕСКИЙ МОНТАЖ','Электрический монтаж'],['ИСПЫТАНИЯ И ПНР','Испытания и ПНР'],['ПЕРЕДАЧА','Передача']];const target=document.getElementById('milestones');if(target)target.innerHTML=stages.map(s=>{const a=last3(base,s[0]),b=last3(current,s[0]),d=inclusive3(shift3(a?.end,b?.end)),css=d===0?'delta-same':d>0?'delta-late':'delta-early',value=d===null?'Нет дат':d===0?'Без сдвига':signed3(d);return '<tr><td>'+s[1]+'</td><td class="date">'+text3(a?.end)+'</td><td class="date">'+text3(b?.end)+'</td><td class="numeric '+css+'">'+value+'</td></tr>'}).join('');const a=last3(base,'ПЕРЕДАЧА'),b=last3(current,'ПЕРЕДАЧА'),d=inclusive3(shift3(a?.end,b?.end));const finish=document.getElementById('finish-delta');if(finish)finish.textContent=d===null?'Нет дат':d===0?'Без сдвига':signed3(d)}
-  async function load3(){try{const values=await Promise.all([read3('base-schedule.xlsx'),read3('current-schedule.xlsx')]);const base=values[0],current=values[1];const draw=()=>{const baseTable=document.getElementById('base-table'),currentTable=document.getElementById('current-table');if(baseTable)baseTable.innerHTML=plan3(base);if(currentTable)currentTable.innerHTML=plan3(current);const baseCount=document.getElementById('base-count'),currentCount=document.getElementById('current-count');if(baseCount)baseCount.textContent=base.length+' строк';if(currentCount)currentCount.textContent=current.length+' строк';document.querySelector('.schedule-head.base p')?.replaceChildren('Полный график по КСГ от 29.07.2026.');document.querySelector('.schedule-head.current p')?.replaceChildren('Полный график по КСГ от 14.09.2026.');milestones3(base,current);metric3()};draw();let n=0;const repeat=setInterval(()=>{draw();if(++n===50)clearInterval(repeat)},250)}catch(e){}}
-  function boot3(){if(!window.XLSX){setTimeout(boot3,150);return}metric3();load3()}
-  if(document.readyState==='loading')window.addEventListener('DOMContentLoaded',boot3);else boot3();
-})();
-</script>
-<script>
-(()=>{
-  const completed={
-    mechanical:[
-      ['1.1','Регулировка фланцев трэков для обеспечения соосности со стрелкой техобслуживания'],
-      ['1.2','Регулировка стрелки техобслуживания для обеспечения соосности с треками']
-    ],
-    electrical:[
-      ['2.1','Установка шкафов в техпомещении'],
-      ['2.2','Монтаж кабельных лотков над шкафами в тех. помещении'],
-      ['2.3','Прокладка кабеля датчиков температуры'],
-      ['2.4','Прокладка кабеля питания вентиляторов'],
-      ['2.5','Поставка и монтаж кронштейнов для корпусов DAP2A и DAP2B.'],
-      ['2.6','Монтаж уличных шкафов'],
-      ['2.7.1','Подключение верхней зоны'],
-      ['2.7.2','подключение зоны переключателя'],
-      ['2.7.3','Подключение зоны технического обслуживания']
-    ]
-  };
-  const esc=value=>String(value).replace(/[&<>]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[char]));
-  const list=items=>'<ul class="completed-list">'+items.map(item=>'<li><span class="completed-id">'+esc(item[0])+'</span><span>'+esc(item[1])+'</span></li>').join('')+'</ul>';
-  function apply(){
-    const panel=document.querySelector('.completed-work-panel');
-    if(panel)panel.innerHTML='<h3>Фактически выполненные работы по механике и электрике на текущую дату</h3><p class="panel-subtitle">Выполнено 11 из 20 работ.</p><div class="completed-groups"><section><div class="completed-part">Механическая часть <span>2 работы</span></div>'+list(completed.mechanical)+'</section><section><div class="completed-part">Электрическая часть <span>9 работ</span></div>'+list(completed.electrical)+'</section></div>';
-    const card=document.querySelector('.kpi.fact');
-    if(!card)return;
-    const label=card.querySelector('.kpi-label');
-    const value=card.querySelector('.kpi-value');
-    const note=card.querySelector('.kpi-note');
-    if(label)label.textContent='Выполнено работ по механике и электрике с 14.09.2026';
-    if(value)value.textContent='11 из 20';
-    if(note)note.textContent='по состоянию на 24.09.2026';
-  }
-  apply();
-  let attempts=0;
-  const refresh=setInterval(()=>{apply();if(++attempts===120)clearInterval(refresh);},250);
-})();
-</script>
-
-<script>
-(()=>{
-  function apply(){
-    let card=document.querySelector('.kpi.fact');
-    if(!card)return;
-    if(card.dataset.metricFinal!=='true'){
-      const fresh=card.cloneNode(true);
-      fresh.dataset.metricFinal='true';
-      card.replaceWith(fresh);
-      card=fresh;
-    }
-    const label=card.querySelector('.kpi-label');
-    const value=card.querySelector('.kpi-value');
-    const note=card.querySelector('.kpi-note');
-    if(label)label.textContent='Выполнено работ по механике и электрике с 14.09.2026';
-    if(value)value.textContent='11 из 20';
-    if(note)note.textContent='по состоянию на 24.09.2026';
-  }
-  apply();
-  let attempts=0;
-  const refresh=setInterval(()=>{apply();if(++attempts===240)clearInterval(refresh);},250);
-})();
-</script>
-
-<script>
-(()=>{
-  let card=document.querySelector('.kpi.fact');
-  if(!card)return;
-  const fresh=card.cloneNode(true);
-  fresh.dataset.metricLock='true';
-  card.replaceWith(fresh);
-  card=fresh;
-  function enforce(){
-    const label=card.querySelector('.kpi-label');
-    const value=card.querySelector('.kpi-value');
-    const note=card.querySelector('.kpi-note');
-    if(label&&label.textContent!=='Выполнено работ по механике и электрике с 14.09.2026')label.textContent='Выполнено работ по механике и электрике с 14.09.2026';
-    if(value&&value.textContent!=='11 из 20')value.textContent='11 из 20';
-    if(note&&note.textContent!=='по состоянию на 24.09.2026')note.textContent='по состоянию на 24.09.2026';
-  }
-  new MutationObserver(enforce).observe(card,{childList:true,subtree:true,characterData:true});
-  enforce();
-})();
-</script>
-
-<script>
-(() => {
-  const setText = (node, text) => { if (node && node.textContent !== text) node.textContent = text; };
-  const enforce = () => {
-    setText(document.querySelector('.asof'), 'Источники: КСГ 29.07.2026 · КСГ 14.09.2026 · ежедневный мониторинг 14–28.09.2026');
-    const card = document.querySelector('.kpi.fact');
-    if (!card) return;
-    setText(card.querySelector('.kpi-label'), 'Выполнено работ по механике и электрике с 14.09.2026');
-    setText(card.querySelector('.kpi-value'), '11 из 20');
-    setText(card.querySelector('.kpi-note'), 'по состоянию на 28.09.2026');
-  };
-  new MutationObserver(enforce).observe(document.body, { childList: true, subtree: true, characterData: true });
-  enforce();
-})();
-</script>
