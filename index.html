@@ -135,6 +135,7 @@
       const normalize = value => String(value ?? '').toLowerCase().replace(/ё/g, 'е').replace(/[^а-яa-z0-9]+/gi, ' ').trim();
       const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[char]));
       const asDate = value => {
+        if (value === null || value === undefined || value === '') return null;
         if (value instanceof Date && !Number.isNaN(value.getTime())) return value;
         if (typeof value === 'number' && window.XLSX) { const item = XLSX.SSF.parse_date_code(value); return item ? new Date(item.y, item.m - 1, item.d) : null; }
         const parsed = new Date(value);
