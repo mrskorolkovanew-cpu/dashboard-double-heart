@@ -185,9 +185,8 @@
       function loadDailyMonitor() {
         if (dailyLoaded) return;
         dailyLoaded = true;
-        const source = 'https://mrskorolkovanew-cpu.github.io/dashboard-double-heart/daily-monitoring.xlsx';
-        const viewer = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(source)}`;
-        document.getElementById('daily-host').innerHTML = `<div class="daily-frame"><iframe title="Ежедневный мониторинг — исходная таблица Excel" src="${viewer}"></iframe></div>`;
+        const preview = `daily-monitoring.html?v=${Date.now()}`;
+        document.getElementById('daily-host').innerHTML = `<div class="daily-frame"><iframe title="Ежедневный мониторинг — исходная таблица" src="${preview}"></iframe></div>`;
       }
       function activate(viewId) {
         document.querySelectorAll('.tab-button').forEach(button => { const active = button.dataset.view === viewId; button.setAttribute('aria-selected', String(active)); document.getElementById(button.dataset.view).hidden = !active; });
