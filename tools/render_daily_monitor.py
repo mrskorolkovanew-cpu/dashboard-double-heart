@@ -91,7 +91,7 @@ def value_text(cell) -> str:
         return value.strftime("%d.%m.%y")
     if isinstance(value, bool):
         return "TRUE" if value else "FALSE"
-    return str(value)
+    return "\n".join(line.rstrip() for line in str(value).splitlines())
 
 
 def cell_css(cell, palette: list[str]) -> str:
