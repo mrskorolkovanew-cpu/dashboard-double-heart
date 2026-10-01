@@ -126,25 +126,48 @@ def render(source: Path, destination: Path) -> None:
     workbook = openpyxl.load_workbook(source, data_only=True)
     worksheet = workbook.active
     palette = theme_palette(workbook)
+    visible_rows = [
+        row
+        for row in range(1, worksheet.max_row + 1)
+        if not worksheet.row_dimensions[row].hidden
+    ]
+    visible_columns = [
+        column
+        for column in range(1, worksheet.max_column + 1)
+        if not worksheet.column_dimensions[get_column_letter(column)].hidden
+    ]
+    visible_row_set = set(visible_rows)
+    visible_column_set = set(visible_columns)
+
     merged_starts: dict[tuple[int, int], tuple[int, int]] = {}
     merged_children: set[tuple[int, int]] = set()
     for area in worksheet.merged_cells.ranges:
-        merged_starts[(area.min_row, area.min_col)] = (area.max_row - area.min_row + 1, area.max_col - area.min_col + 1)
+        # A hidden row or column is not part of the browser representation,
+        # exactly as it is not part of the visible Excel sheet.
+        rows = [row for row in range(area.min_row, area.max_row + 1) if row in visible_row_set]
+        columns = [column for column in range(area.min_col, area.max_col + 1) if column in visible_column_set]
+        if not rows or not columns or area.min_row not in visible_row_set or area.min_col not in visible_column_set:
+            continue
+        merged_starts[(area.min_row, area.min_col)] = (len(rows), len(columns))
         for row in range(area.min_row, area.max_row + 1):
             for column in range(area.min_col, area.max_col + 1):
-                if (row, column) != (area.min_row, area.min_col):
+                if (
+                    (row, column) != (area.min_row, area.min_col)
+                    and row in visible_row_set
+                    and column in visible_column_set
+                ):
                     merged_children.add((row, column))
 
     colgroup = []
-    for column in range(1, worksheet.max_column + 1):
+    for column in visible_columns:
         width = worksheet.column_dimensions[get_column_letter(column)].width or 8.43
-        colgroup.append(f'<col style="width:{max(34, round(width * 7.1))}px">')
+        colgroup.append(f'<col style="width:{max(1, round(width * 7.1))}px">')
 
     table_rows = []
-    for row in range(1, worksheet.max_row + 1):
+    for row in visible_rows:
         height = worksheet.row_dimensions[row].height or 15
         cells = []
-        for column in range(1, worksheet.max_column + 1):
+        for column in visible_columns:
             if (row, column) in merged_children:
                 continue
             cell = worksheet.cell(row, column)
@@ -169,7 +192,7 @@ def render(source: Path, destination: Path) -> None:
     html, body {{ margin:0; min-width:max-content; background:#fff; }}
     body {{ padding:12px; }}
     table {{ border-collapse:collapse; table-layout:fixed; background:#fff; }}
-    td {{ box-sizing:border-box; min-width:34px; padding:2px 4px; line-height:1.2; overflow-wrap:anywhere; }}
+    td {{ box-sizing:border-box; min-width:0; padding:1px 2px; line-height:1.2; overflow-wrap:normal; word-break:normal; hyphens:none; }}
   </style>
 </head>
 <body><table><colgroup>{''.join(colgroup)}</colgroup><tbody>{''.join(table_rows)}</tbody></table></body>
